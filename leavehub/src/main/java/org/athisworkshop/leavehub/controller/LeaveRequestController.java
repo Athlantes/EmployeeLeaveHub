@@ -1,7 +1,8 @@
 package org.athisworkshop.leavehub.controller;
 
+import org.athisworkshop.leavehub.dto.DashboardLeaveDaysDTO;
+import org.athisworkshop.leavehub.dto.DashboardLeaveRequestDTO;
 import org.athisworkshop.leavehub.dto.LeaveRequestDTO;
-import org.athisworkshop.leavehub.entity.LeaveRequest;
 import org.athisworkshop.leavehub.mapper.LeaveRequestMapper;
 import org.athisworkshop.leavehub.service.LeaveRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,5 +33,17 @@ public class LeaveRequestController {
     public ResponseEntity<List<LeaveRequestDTO>> getLeaveRequestsByEmployee(@PathVariable Long employeeId) {
         List<LeaveRequestDTO> requests = leaveRequestService.getAllRequestsByEmployeeId(employeeId);
         return ResponseEntity.ok(requests);
+    }
+
+    @GetMapping("/dashboard/{employeeId}")
+    public ResponseEntity<DashboardLeaveRequestDTO> getLatestLeaveRequestsForEmployee(@PathVariable Long employeeId) {
+        DashboardLeaveRequestDTO result = leaveRequestService.getDashboardRequests(employeeId);
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/stats/{employeeId}")
+    public ResponseEntity<DashboardLeaveDaysDTO> getLeaveDaysForEmployee(@PathVariable Long employeeId) {
+        DashboardLeaveDaysDTO result = leaveRequestService.getDashboardUsedDays(employeeId);
+        return ResponseEntity.ok(result);
     }
 }
