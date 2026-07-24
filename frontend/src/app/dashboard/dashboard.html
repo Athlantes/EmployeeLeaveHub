@@ -1,0 +1,16 @@
+<h1>Dashboard Angajat</h1>
+
+@if (leaveStats) {
+  <p-card header="Statistici Zile Libere" [style]="{ width: '360px' }">
+    <p>Aceste date vin direct din backend:</p>
+    
+    <!-- Trebuie să înlocuiești aceste variabile cu numele exact pe care l-ai dat tu în Java în DashboardLeaveDaysDTO -->
+    <ul>
+        <li>Zile totale: {{ leaveStats.totalDays }}</li>
+        <li>Zile folosite: {{ leaveStats.usedDays }}</li>
+    </ul>
+
+  </p-card>
+} @else {
+  <p>Se încarcă statisticile de la server...</p>
+}

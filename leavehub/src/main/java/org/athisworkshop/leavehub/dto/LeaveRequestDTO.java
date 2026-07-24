@@ -11,7 +11,7 @@ public class LeaveRequestDTO {
     private Status status;
 
     public enum Status{
-        PENDING, APPROVED, REJECTED, DRAFT
+        PENDING, ACCEPTED, REJECTED, DRAFT
     }
 
     public Long getId() {
