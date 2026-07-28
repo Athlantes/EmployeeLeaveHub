@@ -4,10 +4,23 @@ import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../core/services/auth.service';
 import { Router } from '@angular/router';
 
+// Importuri PrimeNG
+import { CardModule } from 'primeng/card';
+import { InputTextModule } from 'primeng/inputtext';
+import { PasswordModule } from 'primeng/password';
+import { ButtonModule } from 'primeng/button';
+
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [
+    CommonModule, 
+    FormsModule, 
+    CardModule, 
+    InputTextModule, 
+    PasswordModule, 
+    ButtonModule
+  ],
   templateUrl: './login.html',
   styleUrls: ['./login.css']
 })
@@ -24,8 +37,8 @@ export class Login {
         this.router.navigate(['/dashboard']);
       },
       error: (err) => {
-        console.error('Eroarea reală este:', err);
-        this.errorMessage = err.message || 'A apărut o eroare la conectare!'; 
+        console.error(err);
+        this.errorMessage = err.message || 'A aparut o eroare la conectare!'; 
       }
     });
   }

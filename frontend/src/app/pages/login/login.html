@@ -1,15 +1,19 @@
-<div class="login-container">
-  <h2>Login EmployeeLeaveHub</h2>
-  <form (ngSubmit)="onSubmit()">
-    <div>
-      <label for="username">Utilizator:</label>
-      <input type="text" id="username" [(ngModel)]="username" name="username" required>
-    </div>
-    <div>
-      <label for="password">Parola:</label>
-      <input type="password" id="password" [(ngModel)]="password" name="password" required>
-    </div>
-    <button type="submit">Intra în cont</button>
-  </form>
-  <p *ngIf="errorMessage" style="color: red;">{{ errorMessage }}</p>
+<div class="login-wrapper">
+  <p-card header="EmployeeLeaveHub" [style]="{ width: '400px' }" styleClass="shadow-3">
+    <form (ngSubmit)="onSubmit()" class="login-form">
+      <div class="field">
+        <label for="username" class="font-semibold">Email</label>
+        <input pInputText id="username" [(ngModel)]="username" name="username" required class="w-full" />
+      </div>
+      
+      <div class="field mt-3">
+        <label for="password" class="font-semibold">Parola</label>
+        <p-password id="password" [(ngModel)]="password" name="password" [feedback]="false" [toggleMask]="true" styleClass="w-full" inputStyleClass="w-full" required></p-password>
+      </div>
+      
+      <p-button label="Intra in cont" type="submit" styleClass="w-full mt-4"></p-button>
+    </form>
+    
+    <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+  </p-card>
 </div>

@@ -3,13 +3,17 @@ import { isPlatformBrowser } from '@angular/common';
 import { DashboardLeaveDaysDTO } from '../../shared/models/DashboardLeaveDaysDTO';
 import { DashboardLeaveRequestDTO } from '../../shared/models/DashboardLeaveRequestDTO';
 import { LeaveRequestService } from '../../core/services/leave-request.service';
-import { CardModule } from 'primeng/card';
 import { DateRangePipe } from '../../shared/pipes/date-range.pipe';
+
+import { CardModule } from 'primeng/card';
+import { TagModule } from 'primeng/tag';
+import { ButtonModule } from 'primeng/button';
+import { DividerModule } from 'primeng/divider';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CardModule, DateRangePipe],
+  imports: [CardModule, TagModule, ButtonModule, DividerModule, DateRangePipe],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })
