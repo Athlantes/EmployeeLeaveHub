@@ -14,11 +14,13 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   login(username: string, password: string): Observable<any> {
-    return this.http.post<{token: string, empl_id: number}>(this.apiUrl, { username, password }).pipe(
+    return this.http.post<{token: string, empl_id: number, name: string, role: string}>(this.apiUrl, { username, password }).pipe(
       tap(response => {
         if (response.token && isPlatformBrowser(this.platformId)) {
           localStorage.setItem('jwt_token', response.token);
           localStorage.setItem('empl_id', response.empl_id.toString()); 
+          localStorage.setItem('employee_name', response.name);
+          localStorage.setItem('employee_role', response.role);
         }
       })
     );
@@ -28,6 +30,8 @@ export class AuthService {
     if (isPlatformBrowser(this.platformId)) {
       localStorage.removeItem('jwt_token');
       localStorage.removeItem('empl_id');
+      localStorage.removeItem('employee_name');
+      localStorage.removeItem('employee_role');
     }
   }
 

@@ -9,17 +9,21 @@ import { CardModule } from 'primeng/card';
 import { TagModule } from 'primeng/tag';
 import { ButtonModule } from 'primeng/button';
 import { DividerModule } from 'primeng/divider';
+import { AvatarModule } from 'primeng/avatar';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CardModule, TagModule, ButtonModule, DividerModule, DateRangePipe],
+  imports: [CardModule, TagModule, ButtonModule, DividerModule, DateRangePipe, AvatarModule],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })
+
 export class Dashboard implements OnInit {
   leaveStats: DashboardLeaveDaysDTO | undefined;
   recentRequests: DashboardLeaveRequestDTO | null = null;
+  userRole: string = '';
+  userInitials: string = '';
 
   constructor(
     private leaveRequestService: LeaveRequestService, 
@@ -29,6 +33,10 @@ export class Dashboard implements OnInit {
 
   ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
+      const fullName = localStorage.getItem('employee_name') || 'User';
+      this.userRole = localStorage.getItem('employee_role') || 'Angajat';
+
+      this.userInitials = this.getInitials(fullName);
       const storedId = localStorage.getItem('empl_id');
       const employeeId = storedId ? parseInt(storedId, 10) : 0;
       
@@ -56,5 +64,15 @@ export class Dashboard implements OnInit {
         console.error('Nu s-a gasit ID-ul angajatului. Te rugam sa te reloghezi.');
       }
     }
+  }
+
+  private getInitials(name: string): string {
+    if (!name) return '';
+    const nameParts = name.trim().split(' ');
+    
+    if (nameParts.length >= 2) {
+      return (nameParts[0][0] + nameParts[1][0]).toUpperCase();
+    }
+    return name.substring(0, 2).toUpperCase();
   }
 }
