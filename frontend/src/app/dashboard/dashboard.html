@@ -1,16 +1,96 @@
-<h1>Dashboard Angajat</h1>
+<h1 class="dashboard-title">Employee Leave Hub</h1>
 
 @if (leaveStats) {
-  <p-card header="Statistici Zile Libere" [style]="{ width: '360px' }">
-    <p>Aceste date vin direct din backend:</p>
-    
-    <!-- Trebuie să înlocuiești aceste variabile cu numele exact pe care l-ai dat tu în Java în DashboardLeaveDaysDTO -->
-    <ul>
-        <li>Zile totale: {{ leaveStats.totalDays }}</li>
-        <li>Zile folosite: {{ leaveStats.usedDays }}</li>
-    </ul>
+  <div class="stats-container">
+    <div class="mini-stat-card">
+      <span class="stat-label">Zile de odihna:</span>
+      <span class="stat-value">{{ leaveStats.usedVacationDays }}</span>
+    </div>
 
-  </p-card>
+    <div class="mini-stat-card">
+      <span class="stat-label">Zile medicale:</span>
+      <span class="stat-value">{{ leaveStats.usedMedicalDays }}</span>
+    </div>
+
+    <div class="mini-stat-card">
+      <span class="stat-label">Zile platite:</span>
+      <span class="stat-value">{{ leaveStats.usedPaidDays }}</span>
+    </div>
+
+    <div class="mini-stat-card">
+      <span class="stat-label">Zile neplatite:</span>
+      <span class="stat-value">{{ leaveStats.usedUnpaidDays }}</span>
+    </div>
+  </div>
 } @else {
-  <p>Se încarcă statisticile de la server...</p>
+  <p>Se incarca statisticile de la server...</p>
+}
+
+@if (recentRequests) {
+  <div class="requests-container">
+    
+    @if (recentRequests.latestDraft) {
+      <div class="request-group">
+        <div class="request-header">
+          <h3>Cereri Draft</h3>
+          <a href="#" class="view-all">View All ></a>
+        </div>
+        <div class="request-row row-draft">
+          <span class="req-type">{{ recentRequests.latestDraft.leaveRequestType }}</span>
+          <span class="req-dates">{{ recentRequests.latestDraft.startDate | dateRange : recentRequests.latestDraft.endDate }}</span>
+          <span class="req-days">{{ recentRequests.latestDraft.workingDays }} zile</span>
+          <span class="req-badge badge-draft">{{ recentRequests.latestDraft.status }}</span>
+          <span class="req-arrow">></span>
+        </div>
+      </div>
+    }
+
+    @if (recentRequests.latestPending) {
+      <div class="request-group">
+        <div class="request-header">
+          <h3>Cereri Pending</h3>
+          <a href="#" class="view-all">View All ></a>
+        </div>
+        <div class="request-row row-pending">
+          <span class="req-type">{{ recentRequests.latestPending.leaveRequestType }}</span>
+          <span class="req-dates">{{ recentRequests.latestPending.startDate | dateRange : recentRequests.latestPending.endDate }}</span>
+          <span class="req-days">{{ recentRequests.latestPending.workingDays }} zile</span>
+          <span class="req-badge badge-pending">{{ recentRequests.latestPending.status }}</span>
+          <span class="req-arrow">></span>
+        </div>
+      </div>
+    }
+
+    @if (recentRequests.latestAccepted) {
+      <div class="request-group">
+        <div class="request-header">
+          <h3>Cereri Accepted</h3>
+          <a href="#" class="view-all">View All ></a>
+        </div>
+        <div class="request-row row-accepted">
+          <span class="req-type">{{ recentRequests.latestAccepted.leaveRequestType }}</span>
+          <span class="req-dates">{{ recentRequests.latestAccepted.startDate | dateRange : recentRequests.latestAccepted.endDate }}</span>
+          <span class="req-days">{{ recentRequests.latestAccepted.workingDays }} zile</span>
+          <span class="req-badge badge-accepted">{{ recentRequests.latestAccepted.status }}</span>
+          <span class="req-arrow">></span>
+        </div>
+      </div>
+    }
+
+    @if (recentRequests.latestRejected) {
+      <div class="request-group">
+        <div class="request-header">
+          <h3>Cereri Respinse</h3>
+          <a href="#" class="view-all">View All ></a>
+        </div>
+        <div class="request-row row-rejected">
+          <span class="req-type">{{ recentRequests.latestRejected.leaveRequestType }}</span>
+          <span class="req-dates">{{ recentRequests.latestRejected.startDate | dateRange : recentRequests.latestRejected.endDate }}</span>
+          <span class="req-days">{{ recentRequests.latestRejected.workingDays }} zile</span>
+          <span class="req-badge badge-rejected">{{ recentRequests.latestRejected.status }}</span>
+          <span class="req-arrow">></span>
+        </div>
+      </div>
+    }
+  </div>
 }

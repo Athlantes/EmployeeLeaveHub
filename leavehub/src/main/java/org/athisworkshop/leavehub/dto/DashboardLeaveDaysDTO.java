@@ -1,17 +1,17 @@
 package org.athisworkshop.leavehub.dto;
 
 public class DashboardLeaveDaysDTO {
-    private Integer usedVacantionDays;
+    private Integer usedVacationDays;
     private Integer usedMedicalDays;
     private Integer usedPaidDays;
     private Integer usedUnpaidDays;
 
-    public Integer getUsedVacantionDays() {
-        return usedVacantionDays;
+    public Integer getUsedVacationDays() {
+        return usedVacationDays;
     }
 
-    public void setUsedVacantionDays(Integer usedVacantionDays) {
-        this.usedVacantionDays = usedVacantionDays;
+    public void setUsedVacationDays(Integer usedVacationDays) {
+        this.usedVacationDays = usedVacationDays;
     }
 
     public Integer getUsedMedicalDays() {

@@ -56,12 +56,20 @@ public class LeaveRequestService {
         int currentYear = Year.now().getValue();
         DashboardLeaveDaysDTO stats = new DashboardLeaveDaysDTO();
 
-        stats.setUsedVacantionDays(leaveRequestRepository.calculateUsedDaysByTypeAndYear(employeeId, "Concediu De Odihna(CO)", currentYear));
-        stats.setUsedMedicalDays(leaveRequestRepository.calculateUsedDaysByTypeAndYear(employeeId, "Concediu Medical(CM)", currentYear));
-        stats.setUsedUnpaidDays(leaveRequestRepository.calculateUsedDaysByTypeAndYear(employeeId, "Concediu Fara Plata (FP)", currentYear));
-        stats.setUsedPaidDays(leaveRequestRepository.calculateUsedDaysByTypeAndYear(employeeId, "Zile Libere Platite (SPECIAL)", currentYear));
+        String acceptedStatus = "ACCEPTED";
+
+        Long vacationDays = leaveRequestRepository.calculateUsedDaysByTypeAndYear(employeeId, "Concediu De Odihna(CO)", currentYear, acceptedStatus);
+        stats.setUsedVacationDays(vacationDays.intValue());
+
+        Long medicalDays = leaveRequestRepository.calculateUsedDaysByTypeAndYear(employeeId, "Concediu Medical(CM)", currentYear, acceptedStatus);
+        stats.setUsedMedicalDays(medicalDays.intValue());
+
+        Long unpaidDays = leaveRequestRepository.calculateUsedDaysByTypeAndYear(employeeId, "Concediu Fara Plata (FP)", currentYear, acceptedStatus);
+        stats.setUsedUnpaidDays(unpaidDays.intValue());
+
+        Long paidDays = leaveRequestRepository.calculateUsedDaysByTypeAndYear(employeeId, "Zile Libere Platite (SPECIAL)", currentYear, acceptedStatus);
+        stats.setUsedPaidDays(paidDays.intValue());
 
         return stats;
-
     }
 }

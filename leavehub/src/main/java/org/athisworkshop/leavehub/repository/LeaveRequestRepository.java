@@ -15,10 +15,11 @@ public interface LeaveRequestRepository extends JpaRepository<LeaveRequest, Long
 
     @Query("SELECT COALESCE(SUM(lr.workingDays), 0) FROM LeaveRequest lr " +
             "WHERE lr.employee.id = :employeeId " +
-            "AND lr.status = 'ACCEPTED' " +
+            "AND lr.status = :status " +
             "AND lr.leaveType.name = :type " +
             "AND YEAR(lr.startDate) = :year")
-    Integer calculateUsedDaysByTypeAndYear(@Param("employeeId") Long employeeId,
-                                           @Param("type") String type,
-                                           @Param("year") int year);
+    Long calculateUsedDaysByTypeAndYear(@Param("employeeId") Long employeeId,
+                                        @Param("type") String type,
+                                        @Param("year") int year,
+                                        @Param("status") String status);
 }

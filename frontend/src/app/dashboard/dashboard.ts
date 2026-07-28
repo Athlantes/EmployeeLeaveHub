@@ -3,16 +3,17 @@ import { DashboardLeaveDaysDTO } from '../../models/DashboardLeaveDaysDTO';
 import { DashboardLeaveRequestDTO } from '../../models/DashboardLeaveRequestDTO';
 import { LeaveRequestService } from '../leave-request.service';
 import { CardModule } from 'primeng/card';
+import { DateRangePipe } from '../pipes/date-range.pipe';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [CardModule],
+  imports: [CardModule, DateRangePipe],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })
 export class Dashboard implements OnInit {
   leaveStats: DashboardLeaveDaysDTO | undefined;
-  recentRequests: DashboardLeaveRequestDTO | undefined;
+  recentRequests: DashboardLeaveRequestDTO | null = null;
 
   constructor(private leaveRequestService: LeaveRequestService) {}
 
