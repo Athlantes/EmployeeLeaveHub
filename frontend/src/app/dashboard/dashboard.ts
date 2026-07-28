@@ -20,16 +20,20 @@ export class Dashboard implements OnInit {
 
   ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
-      const employeeId = 1;
-
-      this.leaveRequestService.getDashboardStats(employeeId).subscribe(
-        (stats: DashboardLeaveDaysDTO) => {
-          this.leaveStats = stats;
-        },
-        (error) => {
-          console.error('Error fetching leave stats:', error);
-        }
-      );
+      const storedId = localStorage.getItem('empl_id');
+      const employeeId = storedId ? parseInt(storedId, 10) : 0;
+      if (employeeId > 0) {
+        this.leaveRequestService.getDashboardStats(employeeId).subscribe(
+          (stats: DashboardLeaveDaysDTO) => {
+            this.leaveStats = stats;
+          },
+          (error) => {
+            console.error('Error fetching leave stats:', error);
+          }
+        );
+      } else {
+        console.error('Nu s-a gasit ID-ul angajatului. Te rugam sa te reloghezi.');
+      }
 
       this.leaveRequestService.getDashboardRequests(employeeId).subscribe(
         (requests: DashboardLeaveRequestDTO) => {

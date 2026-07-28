@@ -17,6 +17,9 @@ public class Employee {
     @Column(name = "email", length = 120)
     private String email;
 
+    @Column(name = "password")
+    private String password;
+
     @Column(name = "role", length = 15)
     private String role;
 
@@ -64,6 +67,10 @@ public class Employee {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public String getPassword() { return password; }
+
+    public void setPassword(String password) { this.password = password; }
 
     public String getRole() {
         return role;
