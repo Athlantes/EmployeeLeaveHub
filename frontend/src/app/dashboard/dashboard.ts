@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { DashboardLeaveDaysDTO } from '../../models/DashboardLeaveDaysDTO';
 import { DashboardLeaveRequestDTO } from '../../models/DashboardLeaveRequestDTO';
 import { LeaveRequestService } from '../leave-request.service';
@@ -15,10 +16,11 @@ export class Dashboard implements OnInit {
   leaveStats: DashboardLeaveDaysDTO | undefined;
   recentRequests: DashboardLeaveRequestDTO | null = null;
 
-  constructor(private leaveRequestService: LeaveRequestService) {}
+  constructor(private leaveRequestService: LeaveRequestService, @Inject(PLATFORM_ID) private platformId: Object) {}
 
   ngOnInit() {
-      const employeeId = 1; // Replace with the actual employee ID
+    if (isPlatformBrowser(this.platformId)) {
+      const employeeId = 1;
 
       this.leaveRequestService.getDashboardStats(employeeId).subscribe(
         (stats: DashboardLeaveDaysDTO) => {
@@ -38,4 +40,5 @@ export class Dashboard implements OnInit {
         }
       );
     }
+  }
 }

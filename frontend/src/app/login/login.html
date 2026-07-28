@@ -1,0 +1,15 @@
+<div class="login-container">
+  <h2>Login EmployeeLeaveHub</h2>
+  <form (ngSubmit)="onSubmit()">
+    <div>
+      <label for="username">Utilizator:</label>
+      <input type="text" id="username" [(ngModel)]="username" name="username" required>
+    </div>
+    <div>
+      <label for="password">Parolă:</label>
+      <input type="password" id="password" [(ngModel)]="password" name="password" required>
+    </div>
+    <button type="submit">Intră în cont</button>
+  </form>
+  <p *ngIf="errorMessage" style="color: red;">{{ errorMessage }}</p>
+</div>

@@ -58,16 +58,16 @@ public class LeaveRequestService {
 
         String acceptedStatus = "ACCEPTED";
 
-        Long vacationDays = leaveRequestRepository.calculateUsedDaysByTypeAndYear(employeeId, "Concediu De Odihna(CO)", currentYear, acceptedStatus);
+        Long vacationDays = leaveRequestRepository.calculateUsedDaysByTypeAndYear(employeeId, "Concediu De Odihna", currentYear, acceptedStatus);
         stats.setUsedVacationDays(vacationDays.intValue());
 
-        Long medicalDays = leaveRequestRepository.calculateUsedDaysByTypeAndYear(employeeId, "Concediu Medical(CM)", currentYear, acceptedStatus);
+        Long medicalDays = leaveRequestRepository.calculateUsedDaysByTypeAndYear(employeeId, "Concediu Medical", currentYear, acceptedStatus);
         stats.setUsedMedicalDays(medicalDays.intValue());
 
-        Long unpaidDays = leaveRequestRepository.calculateUsedDaysByTypeAndYear(employeeId, "Concediu Fara Plata (FP)", currentYear, acceptedStatus);
+        Long unpaidDays = leaveRequestRepository.calculateUsedDaysByTypeAndYear(employeeId, "Concediu Fara Plata", currentYear, acceptedStatus);
         stats.setUsedUnpaidDays(unpaidDays.intValue());
 
-        Long paidDays = leaveRequestRepository.calculateUsedDaysByTypeAndYear(employeeId, "Zile Libere Platite (SPECIAL)", currentYear, acceptedStatus);
+        Long paidDays = leaveRequestRepository.calculateUsedDaysByTypeAndYear(employeeId, "Zile Libere Platite", currentYear, acceptedStatus);
         stats.setUsedPaidDays(paidDays.intValue());
 
         return stats;
