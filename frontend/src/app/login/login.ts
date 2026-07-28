@@ -23,8 +23,9 @@ export class Login {
       next: () => {
         this.router.navigate(['/dashboard']);
       },
-      error: () => {
-        this.errorMessage = 'Autentificare eșuată. Verifică datele introduse!';
+      error: (err) => {
+        console.error('Eroarea reală este:', err);
+        this.errorMessage = err.message || 'A apărut o eroare la conectare!'; 
       }
     });
   }

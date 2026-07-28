@@ -14,11 +14,11 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   login(username: string, password: string): Observable<any> {
-    return this.http.post<{token: string, emplId: number}>(this.apiUrl, { username, password }).pipe(
+    return this.http.post<{token: string, empl_id: number}>(this.apiUrl, { username, password }).pipe(
       tap(response => {
         if (response.token && isPlatformBrowser(this.platformId)) {
           localStorage.setItem('jwt_token', response.token);
-          localStorage.setItem('empl_id', response.emplId.toString()); // Salvăm ID-ul
+          localStorage.setItem('empl_id', response.empl_id.toString()); 
         }
       })
     );

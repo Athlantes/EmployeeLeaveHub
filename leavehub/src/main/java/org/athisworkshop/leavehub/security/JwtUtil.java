@@ -13,7 +13,7 @@ import java.util.function.Function;
 
 @Component
 public class JwtUtil {
-    private final String SECRET_KEY = "EmployeeLeaveHub_SecretKey_TrebuieSaFieLunga_12345!";
+    private final String SECRET_KEY = "ELH_SDKAF_93497234";
 
     private Key getSigningKey() {
         return Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
