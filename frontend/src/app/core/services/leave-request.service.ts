@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { DashboardLeaveRequestDTO } from '../models/DashboardLeaveRequestDTO';
-import { DashboardLeaveDaysDTO } from '../models/DashboardLeaveDaysDTO';    
+import { DashboardLeaveRequestDTO } from '../../shared/models/DashboardLeaveRequestDTO';
+import { DashboardLeaveDaysDTO } from '../../shared/models/DashboardLeaveDaysDTO';    
 
 @Injectable({
   providedIn: 'root',

@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { Login } from './login/login';
-import { Dashboard } from './dashboard/dashboard'; 
+import { Dashboard } from './pages/dashboard/dashboard'; 
 
 export const routes: Routes = [
   { path: 'login', component: Login },

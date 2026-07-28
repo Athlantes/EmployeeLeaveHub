@@ -1,10 +1,10 @@
 import { Component, OnInit, Inject, PLATFORM_ID, ChangeDetectorRef } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { DashboardLeaveDaysDTO } from '../shared/models/DashboardLeaveDaysDTO';
-import { DashboardLeaveRequestDTO } from '../shared/models/DashboardLeaveRequestDTO';
-import { LeaveRequestService } from '../core/services/leave-request.service';
+import { DashboardLeaveDaysDTO } from '../../shared/models/DashboardLeaveDaysDTO';
+import { DashboardLeaveRequestDTO } from '../../shared/models/DashboardLeaveRequestDTO';
+import { LeaveRequestService } from '../../core/services/leave-request.service';
 import { CardModule } from 'primeng/card';
-import { DateRangePipe } from '../shared/pipes/date-range.pipe';
+import { DateRangePipe } from '../../shared/pipes/date-range.pipe';
 
 @Component({
   selector: 'app-dashboard',
