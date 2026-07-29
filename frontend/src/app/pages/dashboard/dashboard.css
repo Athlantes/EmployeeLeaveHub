@@ -1,7 +1,3 @@
-.dashboard-wrapper {
-  padding: 16px;
-}
-
 .dashboard-title {
   font-size: 22px;
   font-weight: 700;
@@ -51,7 +47,7 @@
 .stats-container {
   display: flex;
   flex-direction: row;
-  gap: 16px;
+  gap: 56px;
   flex-wrap: wrap;
   margin-bottom: 24px; 
 }

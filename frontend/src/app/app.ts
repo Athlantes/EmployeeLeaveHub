@@ -1,13 +1,49 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterOutlet, RouterLink, RouterLinkActive, Router } from '@angular/router';
+import { AuthService } from './core/services/auth.service';
+import { AvatarModule } from 'primeng/avatar';
+import { TagModule } from 'primeng/tag';
+import { MenuModule } from 'primeng/menu';
+import { MenuItem } from 'primeng/api';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [
+    CommonModule, 
+    RouterOutlet, 
+    RouterLink, 
+    RouterLinkActive,
+    AvatarModule,
+    TagModule,
+    MenuModule
+  ], 
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrls: ['./app.css']
 })
-export class App {
-  title = 'frontend';
+export class App implements OnInit {
+  profileMenuItems: MenuItem[] | undefined;
+
+  constructor(public authService: AuthService, private router: Router) {}
+
+  ngOnInit() {
+    this.profileMenuItems = [
+      {
+        label: 'Setari cont',
+        icon: 'pi pi-cog',
+      },
+      {
+        separator: true 
+      },
+      {
+        label: 'Logout',
+        icon: 'pi pi-sign-out',
+        command: () => {
+          this.authService.logout(); 
+          this.router.navigate(['/login']); 
+        }
+      }
+    ];
+  }
 }

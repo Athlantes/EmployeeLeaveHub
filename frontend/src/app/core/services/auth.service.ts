@@ -13,6 +13,40 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
+  getRole(): string | null {
+    if (isPlatformBrowser(this.platformId)) {
+      return localStorage.getItem('employee_role');
+    }
+    return null;
+  }
+
+  getName(): string | null {
+    if (isPlatformBrowser(this.platformId)) {
+      return localStorage.getItem('employee_name');
+    }
+    return null;
+  }
+
+  getInitials(): string {
+    const name = this.getName();
+    if (!name) return 'U';
+    
+    const parts = name.split(' ');
+    if (parts.length >= 2) {
+      return (parts[0][0] + parts[1][0]).toUpperCase();
+    }
+    return name.substring(0, 2).toUpperCase();
+  }
+
+  isManager(): boolean {
+    const role = this.getRole();
+    return role === 'Manager' || role === 'Admin';
+  }
+
+  isAdmin(): boolean {
+    return this.getRole() === 'Admin';
+  }
+
   login(username: string, password: string): Observable<any> {
     return this.http.post<{token: string, empl_id: number, name: string, role: string}>(this.apiUrl, { username, password }).pipe(
       tap(response => {

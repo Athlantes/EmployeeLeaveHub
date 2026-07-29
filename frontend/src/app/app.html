@@ -1,1 +1,55 @@
-<router-outlet></router-outlet>
+@if (authService.isLoggedIn()) {
+  <div class="app-container">
+    <aside class="sidebar">
+      <h2 class="logo-title">Employee Leave Hub</h2>
+      
+      <nav class="sidebar-nav">
+        <a routerLink="/dashboard" routerLinkActive="active-link">Dashboard</a>
+        <a routerLink="/my-requests" routerLinkActive="active-link">Cererile Tale</a>
+        <a routerLink="/team" routerLinkActive="active-link">Echipa</a>
+
+        <ng-container *ngIf="authService.isManager()">
+          <div class="nav-divider"></div>
+          <a routerLink="/manage-requests" routerLinkActive="active-link">Management Cereri</a>
+          <a routerLink="/manage-team" routerLinkActive="active-link">Management Echipa</a>
+        </ng-container>
+        <ng-container *ngIf="authService.isAdmin()">
+          <div class="nav-divider"></div>
+          <a routerLink="/admin-panel" routerLinkActive="active-link">Admin Panel</a>
+        </ng-container>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <header class="top-header">
+        <div class="header-left">
+          <h2>Dashboard</h2> 
+        </div>
+
+        <div class="header-right">
+          <button class="icon-btn">
+            <i class="pi pi-bell" style="font-size: 1.25rem; color: #64748b;"></i>
+            <span class="notification-dot"></span>
+          </button>
+
+          <div class="vertical-divider"></div>
+
+          <div class="user-profile-trigger" (click)="profileMenu.toggle($event)">
+            <p-avatar label="{{ authService.getInitials() }}" shape="circle" styleClass="custom-avatar"></p-avatar>
+            <div class="user-info">
+                <span class="user-name">{{ authService.getName() || 'Utilizator' }}</span>
+                <span class="user-role">{{ authService.getRole() || 'USER' }}</span>
+            </div>
+            <i class="pi pi-angle-down chevron-icon"></i>
+          </div>
+        <p-menu #profileMenu [model]="profileMenuItems" [popup]="true"></p-menu>
+        </div>
+      </header>
+
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+
+} @else {
+  <router-outlet></router-outlet>
+}
