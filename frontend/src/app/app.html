@@ -1,4 +1,4 @@
-@if (authService.isLoggedIn()) {
+@if (authService.isLoggedIn() && !isLoginPage) {
   <div class="app-container">
     <aside class="sidebar">
       <h2 class="logo-title">Employee Leave Hub</h2>
@@ -42,7 +42,7 @@
             </div>
             <i class="pi pi-angle-down chevron-icon"></i>
           </div>
-        <p-menu #profileMenu [model]="profileMenuItems" [popup]="true"></p-menu>
+          <p-menu #profileMenu [model]="profileMenuItems" [popup]="true"></p-menu>
         </div>
       </header>
 

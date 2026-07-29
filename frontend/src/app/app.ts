@@ -26,6 +26,7 @@ import { MenuItem } from 'primeng/api';
 export class App implements OnInit {
   profileMenuItems: MenuItem[] | undefined;
   pageTitle: string = 'Dashboard';
+  isLoginPage: boolean = false;
 
   constructor(
     public authService: AuthService, 
@@ -34,12 +35,12 @@ export class App implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.updateTitle();
+    this.updateRouteState();
 
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe(() => {
-      this.updateTitle();
+      this.updateRouteState();
     });
 
     this.profileMenuItems = [
@@ -61,7 +62,9 @@ export class App implements OnInit {
     ];
   }
 
-  private updateTitle() {
+  private updateRouteState() {
+    this.isLoginPage = this.router.url.includes('/login');
+
     let route = this.activatedRoute.firstChild;
     while (route?.firstChild) {
       route = route.firstChild;
