@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet, RouterLink, RouterLinkActive, Router } from '@angular/router';
+import { RouterOutlet, RouterLink, RouterLinkActive, Router, ActivatedRoute, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 import { AuthService } from './core/services/auth.service';
 import { AvatarModule } from 'primeng/avatar';
 import { TagModule } from 'primeng/tag';
@@ -24,10 +25,23 @@ import { MenuItem } from 'primeng/api';
 })
 export class App implements OnInit {
   profileMenuItems: MenuItem[] | undefined;
+  pageTitle: string = 'Dashboard';
 
-  constructor(public authService: AuthService, private router: Router) {}
+  constructor(
+    public authService: AuthService, 
+    private router: Router,
+    private activatedRoute: ActivatedRoute
+  ) {}
 
   ngOnInit() {
+    this.updateTitle();
+
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe(() => {
+      this.updateTitle();
+    });
+
     this.profileMenuItems = [
       {
         label: 'Setari cont',
@@ -45,5 +59,13 @@ export class App implements OnInit {
         }
       }
     ];
+  }
+
+  private updateTitle() {
+    let route = this.activatedRoute.firstChild;
+    while (route?.firstChild) {
+      route = route.firstChild;
+    }
+    this.pageTitle = route?.snapshot.data['title'] || 'Dashboard';
   }
 }

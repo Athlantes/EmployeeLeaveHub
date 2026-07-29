@@ -57,7 +57,6 @@
   flex-direction: column;
 }
 
-/* --- NOUL TOP HEADER --- */
 .top-header {
   display: flex;
   justify-content: space-between;
@@ -129,6 +128,16 @@
 
 .user-profile-trigger:hover {
   background-color: #f8fafc;
+}
+
+::ng-deep .custom-avatar {
+  width: 40px;
+  height: 40px;
+  background-color: #0d47a1;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 1px;
 }
 
 .user-info {
