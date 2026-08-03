@@ -10,11 +10,12 @@ import { TagModule } from 'primeng/tag';
 import { ButtonModule } from 'primeng/button';
 import { DividerModule } from 'primeng/divider';
 import { AvatarModule } from 'primeng/avatar';
+import { DashboardCalendar } from './dashboard-calendar/dashboard-calendar';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CardModule, TagModule, ButtonModule, DividerModule, DateRangePipe, AvatarModule],
+  imports: [CardModule, TagModule, ButtonModule, DividerModule, DateRangePipe, AvatarModule, DashboardCalendar],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })
@@ -74,5 +75,15 @@ export class Dashboard implements OnInit {
       return (nameParts[0][0] + nameParts[1][0]).toUpperCase();
     }
     return name.substring(0, 2).toUpperCase();
+  }
+
+  get allLeaveRequestsList(): any[] {
+    if (!this.recentRequests) return [];
+    const list: any[] = [];
+    if (this.recentRequests.latestDraft) list.push(this.recentRequests.latestDraft);
+    if (this.recentRequests.latestPending) list.push(this.recentRequests.latestPending);
+    if (this.recentRequests.latestAccepted) list.push(this.recentRequests.latestAccepted);
+    if (this.recentRequests.latestRejected) list.push(this.recentRequests.latestRejected);
+    return list;
   }
 }

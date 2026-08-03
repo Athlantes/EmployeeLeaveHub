@@ -1,0 +1,46 @@
+<p-card styleClass="calendar-card">
+  <div class="calendar-header">
+    <button pButton icon="pi pi-chevron-left" [text]="true" [rounded]="true" (click)="prevMonth()"></button>
+    <span class="month-label">{{ monthYearLabel | titlecase }}</span>
+    <button pButton icon="pi pi-chevron-right" [text]="true" [rounded]="true" (click)="nextMonth()"></button>
+  </div>
+
+  <div class="weekdays-grid">
+    <div *ngFor="let day of daysOfWeek" class="weekday-cell">{{ day }}</div>
+  </div>
+
+  <div class="days-grid">
+    <div 
+      *ngFor="let day of calendarDays" 
+      class="day-cell"
+      [class.other-month]="!day.isCurrentMonth"
+      [class.today]="day.isToday"
+      [class.status-legal-holiday]="day.statusType === 'LEGAL_HOLIDAY'"
+      [class.status-pending]="day.statusType === 'PENDING'"
+      [class.status-vacation]="day.statusType === 'APPROVED_VACATION'"
+      [class.status-medical]="day.statusType === 'APPROVED_MEDICAL'"
+      [title]="day.tooltip || ''"
+    >
+      <span class="day-number">{{ day.dayNumber }}</span>
+    </div>
+  </div>
+
+  <div class="calendar-legend">
+    <div class="legend-item">
+      <span class="legend-color legal-holiday"></span>
+      <span>Sarbatoare Legala</span>
+    </div>
+    <div class="legend-item">
+      <span class="legend-color pending"></span>
+      <span>Cereri in asteptare</span>
+    </div>
+    <div class="legend-item">
+      <span class="legend-color vacation"></span>
+      <span>Concediu de Odihna</span>
+    </div>
+    <div class="legend-item">
+      <span class="legend-color medical"></span>
+      <span>Concediu Medical</span>
+    </div>
+  </div>
+</p-card>

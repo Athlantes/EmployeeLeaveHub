@@ -1,106 +1,113 @@
 <div class="dashboard-wrapper">
 
-  @if (leaveStats) {
-    <div class="stats-container">
-      <p-card header="Zile de odihna" styleClass="mini-stat-card">
-        <span class="stat-value">{{ leaveStats.usedVacationDays }}</span>
-      </p-card>
+  <div class="dashboard-main-content">
+    @if (leaveStats) {
+      <div class="stats-container">
+        <p-card header="Zile de odihna" styleClass="mini-stat-card">
+          <span class="stat-value">{{ leaveStats.usedVacationDays }}</span>
+        </p-card>
 
-      <p-card header="Zile medicale" styleClass="mini-stat-card">
-        <span class="stat-value">{{ leaveStats.usedMedicalDays }}</span>
-      </p-card>
+        <p-card header="Zile medicale" styleClass="mini-stat-card">
+          <span class="stat-value">{{ leaveStats.usedMedicalDays }}</span>
+        </p-card>
 
-      <p-card header="Zile platite" styleClass="mini-stat-card">
-        <span class="stat-value">{{ leaveStats.usedPaidDays }}</span>
-      </p-card>
+        <p-card header="Zile platite" styleClass="mini-stat-card">
+          <span class="stat-value">{{ leaveStats.usedPaidDays }}</span>
+        </p-card>
 
-      <p-card header="Zile neplatite" styleClass="mini-stat-card">
-        <span class="stat-value">{{ leaveStats.usedUnpaidDays }}</span>
-      </p-card>
-    </div>
-  } @else {
-    <p>Se incarca statisticile de la server...</p>
-  }
+        <p-card header="Zile neplatite" styleClass="mini-stat-card">
+          <span class="stat-value">{{ leaveStats.usedUnpaidDays }}</span>
+        </p-card>
+      </div>
+    } @else {
+      <p>Se incarca statisticile de la server...</p>
+    }
 
-  @if (recentRequests) {
-    <div class="requests-container">
-      <p-card header="Activitate recenta">
-        
-        @if (recentRequests.latestDraft) {
-          <div class="request-group">
-            <div class="request-header">
-              <h3>Cereri Draft</h3>
-              <p-button label="View All >" [link]="true" size="small"></p-button>
+    @if (recentRequests) {
+      <div class="requests-container">
+        <p-card header="Activitate recenta">
+          
+          @if (recentRequests.latestDraft) {
+            <div class="request-group">
+              <div class="request-header">
+                <h3>Cereri Draft</h3>
+                <p-button label="View All >" [link]="true" size="small"></p-button>
+              </div>
+              <div class="request-row">
+                <span class="req-type">{{ recentRequests.latestDraft.leaveRequestType }}</span>
+                <span class="req-dates">{{ recentRequests.latestDraft.startDate | dateRange : recentRequests.latestDraft.endDate }}</span>
+                <span class="req-days">{{ recentRequests.latestDraft.workingDays }} zile</span>
+                <span class="req-badge">
+                  <p-tag [value]="recentRequests.latestDraft.status" severity="secondary"></p-tag>
+                </span>
+                <p-button icon="pi pi-chevron-right" [text]="true" [rounded]="true"></p-button>
+              </div>
+              <p-divider></p-divider>
             </div>
-            <div class="request-row">
-              <span class="req-type">{{ recentRequests.latestDraft.leaveRequestType }}</span>
-              <span class="req-dates">{{ recentRequests.latestDraft.startDate | dateRange : recentRequests.latestDraft.endDate }}</span>
-              <span class="req-days">{{ recentRequests.latestDraft.workingDays }} zile</span>
-              <span class="req-badge">
-                <p-tag [value]="recentRequests.latestDraft.status" severity="secondary"></p-tag>
-              </span>
-              <p-button icon="pi pi-chevron-right" [text]="true" [rounded]="true"></p-button>
-            </div>
-            <p-divider></p-divider>
-          </div>
-        }
+          }
 
-        @if (recentRequests.latestPending) {
-          <div class="request-group">
-            <div class="request-header">
-              <h3>Cereri Pending</h3>
-              <p-button label="View All >" [link]="true" size="small"></p-button>
+          @if (recentRequests.latestPending) {
+            <div class="request-group">
+              <div class="request-header">
+                <h3>Cereri Pending</h3>
+                <p-button label="View All >" [link]="true" size="small"></p-button>
+              </div>
+              <div class="request-row">
+                <span class="req-type">{{ recentRequests.latestPending.leaveRequestType }}</span>
+                <span class="req-dates">{{ recentRequests.latestPending.startDate | dateRange : recentRequests.latestPending.endDate }}</span>
+                <span class="req-days">{{ recentRequests.latestPending.workingDays }} zile</span>
+                <span class="req-badge">
+                  <p-tag [value]="recentRequests.latestPending.status" severity="warn"></p-tag>
+                </span>
+                <p-button icon="pi pi-chevron-right" [text]="true" [rounded]="true"></p-button>
+              </div>
+              <p-divider></p-divider>
             </div>
-            <div class="request-row">
-              <span class="req-type">{{ recentRequests.latestPending.leaveRequestType }}</span>
-              <span class="req-dates">{{ recentRequests.latestPending.startDate | dateRange : recentRequests.latestPending.endDate }}</span>
-              <span class="req-days">{{ recentRequests.latestPending.workingDays }} zile</span>
-              <span class="req-badge">
-                <p-tag [value]="recentRequests.latestPending.status" severity="warn"></p-tag>
-              </span>
-              <p-button icon="pi pi-chevron-right" [text]="true" [rounded]="true"></p-button>
-            </div>
-            <p-divider></p-divider>
-          </div>
-        }
+          }
 
-        @if (recentRequests.latestAccepted) {
-          <div class="request-group">
-            <div class="request-header">
-              <h3>Cereri Accepted</h3>
-              <p-button label="View All >" [link]="true" size="small"></p-button>
+          @if (recentRequests.latestAccepted) {
+            <div class="request-group">
+              <div class="request-header">
+                <h3>Cereri Accepted</h3>
+                <p-button label="View All >" [link]="true" size="small"></p-button>
+              </div>
+              <div class="request-row">
+                <span class="req-type">{{ recentRequests.latestAccepted.leaveRequestType }}</span>
+                <span class="req-dates">{{ recentRequests.latestAccepted.startDate | dateRange : recentRequests.latestAccepted.endDate }}</span>
+                <span class="req-days">{{ recentRequests.latestAccepted.workingDays }} zile</span>
+                <span class="req-badge">
+                  <p-tag [value]="recentRequests.latestAccepted.status" severity="success"></p-tag>
+                </span>
+                <p-button icon="pi pi-chevron-right" [text]="true" [rounded]="true"></p-button>
+              </div>
+              <p-divider></p-divider>
             </div>
-            <div class="request-row">
-              <span class="req-type">{{ recentRequests.latestAccepted.leaveRequestType }}</span>
-              <span class="req-dates">{{ recentRequests.latestAccepted.startDate | dateRange : recentRequests.latestAccepted.endDate }}</span>
-              <span class="req-days">{{ recentRequests.latestAccepted.workingDays }} zile</span>
-              <span class="req-badge">
-                <p-tag [value]="recentRequests.latestAccepted.status" severity="success"></p-tag>
-              </span>
-              <p-button icon="pi pi-chevron-right" [text]="true" [rounded]="true"></p-button>
-            </div>
-            <p-divider></p-divider>
-          </div>
-        }
+          }
 
-        @if (recentRequests.latestRejected) {
-          <div class="request-group">
-            <div class="request-header">
-              <h3>Cereri Respinse</h3>
-              <p-button label="View All >" [link]="true" size="small"></p-button>
+          @if (recentRequests.latestRejected) {
+            <div class="request-group">
+              <div class="request-header">
+                <h3>Cereri Respinse</h3>
+                <p-button label="View All >" [link]="true" size="small"></p-button>
+              </div>
+              <div class="request-row">
+                <span class="req-type">{{ recentRequests.latestRejected.leaveRequestType }}</span>
+                <span class="req-dates">{{ recentRequests.latestRejected.startDate | dateRange : recentRequests.latestRejected.endDate }}</span>
+                <span class="req-days">{{ recentRequests.latestRejected.workingDays }} zile</span>
+                <span class="req-badge">
+                  <p-tag [value]="recentRequests.latestRejected.status" severity="danger"></p-tag>
+                </span>
+                <p-button icon="pi pi-chevron-right" [text]="true" [rounded]="true"></p-button>
+              </div>
             </div>
-            <div class="request-row">
-              <span class="req-type">{{ recentRequests.latestRejected.leaveRequestType }}</span>
-              <span class="req-dates">{{ recentRequests.latestRejected.startDate | dateRange : recentRequests.latestRejected.endDate }}</span>
-              <span class="req-days">{{ recentRequests.latestRejected.workingDays }} zile</span>
-              <span class="req-badge">
-                <p-tag [value]="recentRequests.latestRejected.status" severity="danger"></p-tag>
-              </span>
-              <p-button icon="pi pi-chevron-right" [text]="true" [rounded]="true"></p-button>
-            </div>
-          </div>
-        }
-      </p-card>
-    </div>
-  }
+          }
+        </p-card>
+      </div>
+    }
+  </div>
+
+  <div class="dashboard-sidebar-right">
+    <app-dashboard-calendar [leaveRequests]="allLeaveRequestsList"></app-dashboard-calendar>
+  </div>
+
 </div>
