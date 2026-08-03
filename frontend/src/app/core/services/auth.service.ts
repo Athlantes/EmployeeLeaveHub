@@ -2,6 +2,7 @@ import { Injectable, inject, PLATFORM_ID } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { isPlatformBrowser } from '@angular/common';
 import { Observable, tap } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,7 @@ export class AuthService {
   private apiUrl = 'http://localhost:8080/api/auth/login';
 
   private platformId = inject(PLATFORM_ID);
+  private router = inject(Router);
 
   constructor(private http: HttpClient) {}
 
@@ -66,6 +68,8 @@ export class AuthService {
       localStorage.removeItem('empl_id');
       localStorage.removeItem('employee_name');
       localStorage.removeItem('employee_role');
+
+      this.router.navigate(['/login']);
     }
   }
 
