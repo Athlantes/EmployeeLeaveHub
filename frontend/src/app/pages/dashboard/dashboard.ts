@@ -4,7 +4,7 @@ import { DashboardLeaveDaysDTO } from '../../shared/models/DashboardLeaveDaysDTO
 import { DashboardLeaveRequestDTO } from '../../shared/models/DashboardLeaveRequestDTO';
 import { LeaveRequestService } from '../../core/services/leave-request.service';
 import { DateRangePipe } from '../../shared/pipes/date-range.pipe';
-
+import { RouterModule } from '@angular/router';
 import { CardModule } from 'primeng/card';
 import { TagModule } from 'primeng/tag';
 import { ButtonModule } from 'primeng/button';
@@ -15,7 +15,7 @@ import { DashboardCalendar } from './dashboard-calendar/dashboard-calendar';
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CardModule, TagModule, ButtonModule, DividerModule, DateRangePipe, AvatarModule, DashboardCalendar],
+  imports: [CardModule, TagModule, ButtonModule, DividerModule, DateRangePipe, AvatarModule, DashboardCalendar, RouterModule],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })
@@ -62,7 +62,7 @@ export class Dashboard implements OnInit {
           error: (error) => console.error('Error fetching recent requests:', error)
         });
       } else {
-        console.error('Nu s-a gasit ID-ul angajatului. Te rugam sa te reloghezi.');
+        console.error('An error occurred: Please log in again.');
       }
     }
   }

@@ -1,1 +1,108 @@
-<p>my-requests works!</p>
+<div class="my-requests-container">
+
+  <div class="filters-container">
+    
+    <div class="filter-item">
+      <label>Status</label>
+      <p-select 
+        [options]="statusOptions" 
+        [(ngModel)]="selectedStatus" 
+        (onChange)="onFilterChange()" 
+        placeholder="Select Status" 
+        styleClass="w-full">
+      </p-select>
+    </div>
+
+    <div class="filter-item">
+      <label>Leave Type</label>
+      <p-select 
+        [options]="typeOptions" 
+        [(ngModel)]="selectedType" 
+        (onChange)="onFilterChange()" 
+        placeholder="Select Type" 
+        styleClass="w-full">
+      </p-select>
+    </div>
+
+    <div class="filter-item">
+      <label>Search Date</label>
+      <p-datepicker 
+        [(ngModel)]="selectedDate" 
+        (onSelect)="onFilterChange()" 
+        (onClear)="onFilterChange()" 
+        [showClear]="true" 
+        placeholder="Choose a Date" 
+        dateFormat="dd.mm.yy" 
+        styleClass="w-full">
+      </p-datepicker>
+    </div>
+
+    <div class="filter-item btn-clear">
+      <p-button 
+        label="Reset" 
+        icon="pi pi-filter-slash" 
+        severity="secondary" 
+        [outlined]="true" 
+        (onClick)="clearFilters()">
+      </p-button>
+    </div>
+
+  </div>
+
+  <p-card styleClass="requests-list-card">
+    
+    <div *ngIf="filteredRequests.length === 0" class="no-requests">
+      No requests found matching the selected criteria.
+    </div>
+
+    <ng-container *ngFor="let req of filteredRequests; let last = last">
+      
+      <div class="request-row">
+        <span class="req-type">{{ req.leaveRequestType }}</span>
+        <span class="req-dates">{{ req.startDate }} - {{ req.endDate }}</span>
+        <span class="req-days">{{ req.workingDays }} days</span>
+        <span class="req-badge">
+          <p-tag [value]="req.status" [severity]="getSeverity(req.status)"></p-tag>
+        </span>
+        <p-button 
+          icon="pi pi-chevron-right" 
+          [text]="true" 
+          [rounded]="true" 
+          (onClick)="openRequestOverlay(req)">
+        </p-button>
+      </div>
+
+      <p-divider *ngIf="!last"></p-divider>
+
+    </ng-container>
+  </p-card>
+</div>
+
+<p-dialog 
+  header="Request Details" 
+  [(visible)]="displayDialog" 
+  [modal]="true" 
+  [draggable]="false" 
+  [resizable]="false" 
+  [style]="{ width: '450px' }" 
+  (onHide)="closeOverlay()">
+  
+  <div class="dialog-body" *ngIf="selectedRequest">
+    <div class="detail-row">
+      <strong>Leave Type:</strong> 
+      <span>{{ selectedRequest.leaveRequestType }}</span>
+    </div>
+    <div class="detail-row">
+      <strong>Status:</strong> 
+      <p-tag [value]="selectedRequest.status" [severity]="getSeverity(selectedRequest.status)"></p-tag>
+    </div>
+    <div class="detail-row">
+      <strong>Period:</strong> 
+      <span>{{ selectedRequest.startDate }} to {{ selectedRequest.endDate }}</span>
+    </div>
+    <div class="detail-row">
+      <strong>Working Days:</strong> 
+      <span>{{ selectedRequest.workingDays }}</span>
+    </div>
+  </div>
+</p-dialog>

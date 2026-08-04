@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../core/services/auth.service';
 import { Router } from '@angular/router';
 
-// Importuri PrimeNG
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
@@ -38,7 +37,7 @@ export class Login {
       },
       error: (err) => {
         console.error(err);
-        this.errorMessage = err.message || 'A aparut o eroare la conectare!'; 
+        this.errorMessage = err.message || 'An error occurred while logging in!'; 
       }
     });
   }

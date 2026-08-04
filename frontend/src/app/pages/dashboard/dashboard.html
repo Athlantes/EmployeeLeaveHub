@@ -3,44 +3,44 @@
   <div class="dashboard-main-content">
     @if (leaveStats) {
       <div class="stats-container">
-        <p-card header="Zile de odihna" styleClass="mini-stat-card">
+        <p-card header="Vacation Days" styleClass="mini-stat-card">
           <span class="stat-value">{{ leaveStats.usedVacationDays }}</span>
         </p-card>
 
-        <p-card header="Zile medicale" styleClass="mini-stat-card">
+        <p-card header="Medical Days" styleClass="mini-stat-card">
           <span class="stat-value">{{ leaveStats.usedMedicalDays }}</span>
         </p-card>
 
-        <p-card header="Zile platite" styleClass="mini-stat-card">
+        <p-card header="Paid Days" styleClass="mini-stat-card">
           <span class="stat-value">{{ leaveStats.usedPaidDays }}</span>
         </p-card>
 
-        <p-card header="Zile neplatite" styleClass="mini-stat-card">
+        <p-card header="Unpaid Days" styleClass="mini-stat-card">
           <span class="stat-value">{{ leaveStats.usedUnpaidDays }}</span>
         </p-card>
       </div>
     } @else {
-      <p>Se incarca statisticile de la server...</p>
+      <p>Loading Data...</p>
     }
 
     @if (recentRequests) {
       <div class="requests-container">
-        <p-card header="Activitate recenta">
+        <p-card header="Recent Activity">
           
           @if (recentRequests.latestDraft) {
             <div class="request-group">
               <div class="request-header">
-                <h3>Cereri Draft</h3>
-                <p-button label="View All >" [link]="true" size="small"></p-button>
+                <h3>Draft Requests</h3>
+                <p-button label="View All >" [link]="true" size="small" [routerLink]="['/my-requests']" [queryParams]="{ status: 'DRAFT' }"></p-button>
               </div>
               <div class="request-row">
                 <span class="req-type">{{ recentRequests.latestDraft.leaveRequestType }}</span>
                 <span class="req-dates">{{ recentRequests.latestDraft.startDate | dateRange : recentRequests.latestDraft.endDate }}</span>
-                <span class="req-days">{{ recentRequests.latestDraft.workingDays }} zile</span>
+                <span class="req-days">{{ recentRequests.latestDraft.workingDays }} days</span>
                 <span class="req-badge">
                   <p-tag [value]="recentRequests.latestDraft.status" severity="secondary"></p-tag>
                 </span>
-                <p-button icon="pi pi-chevron-right" [text]="true" [rounded]="true"></p-button>
+                <p-button icon="pi pi-chevron-right" [text]="true" [rounded]="true" [routerLink]="['/my-requests']" [queryParams]="{ requestId: recentRequests.latestDraft.id }"></p-button>
               </div>
               <p-divider></p-divider>
             </div>
@@ -49,17 +49,17 @@
           @if (recentRequests.latestPending) {
             <div class="request-group">
               <div class="request-header">
-                <h3>Cereri Pending</h3>
-                <p-button label="View All >" [link]="true" size="small"></p-button>
+                <h3>Pending Requests</h3>
+                <p-button label="View All >" [link]="true" size="small" [routerLink]="['/my-requests']" [queryParams]="{ status: 'PENDING' }"></p-button>
               </div>
               <div class="request-row">
                 <span class="req-type">{{ recentRequests.latestPending.leaveRequestType }}</span>
                 <span class="req-dates">{{ recentRequests.latestPending.startDate | dateRange : recentRequests.latestPending.endDate }}</span>
-                <span class="req-days">{{ recentRequests.latestPending.workingDays }} zile</span>
+                <span class="req-days">{{ recentRequests.latestPending.workingDays }} days</span>
                 <span class="req-badge">
                   <p-tag [value]="recentRequests.latestPending.status" severity="warn"></p-tag>
                 </span>
-                <p-button icon="pi pi-chevron-right" [text]="true" [rounded]="true"></p-button>
+                <p-button icon="pi pi-chevron-right" [text]="true" [rounded]="true" [routerLink]="['/my-requests']" [queryParams]="{ requestId: recentRequests.latestPending.id }"></p-button>
               </div>
               <p-divider></p-divider>
             </div>
@@ -68,17 +68,17 @@
           @if (recentRequests.latestAccepted) {
             <div class="request-group">
               <div class="request-header">
-                <h3>Cereri Accepted</h3>
-                <p-button label="View All >" [link]="true" size="small"></p-button>
+                <h3>Accepted Requests</h3>
+                <p-button label="View All >" [link]="true" size="small" [routerLink]="['/my-requests']" [queryParams]="{ status: 'ACCEPTED' }"></p-button>
               </div>
               <div class="request-row">
                 <span class="req-type">{{ recentRequests.latestAccepted.leaveRequestType }}</span>
                 <span class="req-dates">{{ recentRequests.latestAccepted.startDate | dateRange : recentRequests.latestAccepted.endDate }}</span>
-                <span class="req-days">{{ recentRequests.latestAccepted.workingDays }} zile</span>
+                <span class="req-days">{{ recentRequests.latestAccepted.workingDays }} days</span>
                 <span class="req-badge">
                   <p-tag [value]="recentRequests.latestAccepted.status" severity="success"></p-tag>
                 </span>
-                <p-button icon="pi pi-chevron-right" [text]="true" [rounded]="true"></p-button>
+                <p-button icon="pi pi-chevron-right" [text]="true" [rounded]="true" [routerLink]="['/my-requests']" [queryParams]="{ requestId: recentRequests.latestAccepted.id }"></p-button>
               </div>
               <p-divider></p-divider>
             </div>
@@ -87,17 +87,17 @@
           @if (recentRequests.latestRejected) {
             <div class="request-group">
               <div class="request-header">
-                <h3>Cereri Respinse</h3>
-                <p-button label="View All >" [link]="true" size="small"></p-button>
+                <h3>Rejected Requests</h3>
+                <p-button label="View All >" [link]="true" size="small" [routerLink]="['/my-requests']" [queryParams]="{ status: 'REJECTED' }"></p-button>
               </div>
               <div class="request-row">
                 <span class="req-type">{{ recentRequests.latestRejected.leaveRequestType }}</span>
                 <span class="req-dates">{{ recentRequests.latestRejected.startDate | dateRange : recentRequests.latestRejected.endDate }}</span>
-                <span class="req-days">{{ recentRequests.latestRejected.workingDays }} zile</span>
+                <span class="req-days">{{ recentRequests.latestRejected.workingDays }} days</span>
                 <span class="req-badge">
                   <p-tag [value]="recentRequests.latestRejected.status" severity="danger"></p-tag>
                 </span>
-                <p-button icon="pi pi-chevron-right" [text]="true" [rounded]="true"></p-button>
+                <p-button icon="pi pi-chevron-right" [text]="true" [rounded]="true" [routerLink]="['/my-requests']" [queryParams]="{ requestId: recentRequests.latestRejected.id }"></p-button>
               </div>
             </div>
           }

@@ -7,6 +7,7 @@ import { AvatarModule } from 'primeng/avatar';
 import { TagModule } from 'primeng/tag';
 import { MenuModule } from 'primeng/menu';
 import { MenuItem } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-root',
@@ -18,7 +19,8 @@ import { MenuItem } from 'primeng/api';
     RouterLinkActive,
     AvatarModule,
     TagModule,
-    MenuModule
+    MenuModule,
+    ButtonModule
   ], 
   templateUrl: './app.html',
   styleUrls: ['./app.css']
@@ -27,6 +29,7 @@ export class App implements OnInit {
   profileMenuItems: MenuItem[] | undefined;
   pageTitle: string = 'Dashboard';
   isLoginPage: boolean = false;
+  showNewRequestBtn: boolean = false;
 
   constructor(
     public authService: AuthService, 
@@ -45,7 +48,7 @@ export class App implements OnInit {
 
     this.profileMenuItems = [
       {
-        label: 'Setari cont',
+        label: 'Settings',
         icon: 'pi pi-cog',
       },
       {
@@ -64,11 +67,17 @@ export class App implements OnInit {
 
   private updateRouteState() {
     this.isLoginPage = this.router.url.includes('/login');
+    const currentUrl = this.router.url;
+    this.showNewRequestBtn = currentUrl.includes('/dashboard') || currentUrl.includes('/my-requests');
 
     let route = this.activatedRoute.firstChild;
     while (route?.firstChild) {
       route = route.firstChild;
     }
     this.pageTitle = route?.snapshot.data['title'] || 'Dashboard';
+  }
+
+  initiateNewRequest(): void {
+    console.log('Initiating new request...');
   }
 }

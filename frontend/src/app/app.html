@@ -5,13 +5,13 @@
       
       <nav class="sidebar-nav">
         <a routerLink="/dashboard" routerLinkActive="active-link">Dashboard</a>
-        <a routerLink="/my-requests" routerLinkActive="active-link">Cererile Tale</a>
-        <a routerLink="/team" routerLinkActive="active-link">Echipa</a>
+        <a routerLink="/my-requests" routerLinkActive="active-link">My Requests</a>
+        <a routerLink="/team" routerLinkActive="active-link">Team</a>
 
         <ng-container *ngIf="authService.isManager()">
           <div class="nav-divider"></div>
-          <a routerLink="/manage-requests" routerLinkActive="active-link">Management Cereri</a>
-          <a routerLink="/manage-team" routerLinkActive="active-link">Management Echipa</a>
+          <a routerLink="/manage-requests" routerLinkActive="active-link">Management Requests</a>
+          <a routerLink="/manage-team" routerLinkActive="active-link">Management Team</a>
         </ng-container>
         <ng-container *ngIf="authService.isAdmin()">
           <div class="nav-divider"></div>
@@ -24,6 +24,16 @@
       <header class="top-header">
         <div class="header-left">
           <h2>{{ pageTitle }}</h2> 
+
+          <p-button 
+            *ngIf="showNewRequestBtn"
+            label="+ New Request" 
+            severity="success" 
+            size="small" 
+            [rounded]="true" 
+            (onClick)="initiateNewRequest()"
+            styleClass="new-req-btn">
+          </p-button>
         </div>
 
         <div class="header-right">

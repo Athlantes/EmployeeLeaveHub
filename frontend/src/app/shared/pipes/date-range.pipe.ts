@@ -6,8 +6,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class DateRangePipe implements PipeTransform {
   private readonly months = [
-    'Ianuarie', 'Februarie', 'Martie', 'Aprilie', 'Mai', 'Iunie',
-    'Iulie', 'August', 'Septembrie', 'Octombrie', 'Noiembrie', 'Decembrie'
+    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
   ];
 
   transform(startDateStr: string | null | undefined, endDateStr: string | null | undefined): string {

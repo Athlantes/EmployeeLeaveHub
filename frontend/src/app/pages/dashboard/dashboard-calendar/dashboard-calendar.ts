@@ -24,7 +24,7 @@ export class DashboardCalendar implements OnInit, OnChanges {
   @Input() leaveRequests: any[] = [];
 
   currentDate: Date = new Date();
-  daysOfWeek: string[] = ['Lun', 'Mar', 'Mie', 'Joi', 'Vin', 'Sâm', 'Dum'];
+  daysOfWeek: string[] = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
   calendarDays: CalendarDay[] = [];
   
   private hd = new Holidays('RO');
@@ -86,7 +86,7 @@ export class DashboardCalendar implements OnInit, OnChanges {
       const holidayName = Array.isArray(holiday) ? holiday[0]?.name : holiday.name;
       return {
         statusType: 'LEGAL_HOLIDAY' as const,
-        tooltip: holidayName || 'Sărbătoare Legală'
+        tooltip: holidayName || 'Legal Holiday'
       };
     }
 
@@ -95,13 +95,13 @@ export class DashboardCalendar implements OnInit, OnChanges {
         if (req && req.startDate && req.endDate) {
           if (dateStr >= req.startDate && dateStr <= req.endDate) {
             if (req.status === 'PENDING') {
-              return { statusType: 'PENDING' as const, tooltip: 'Cerere în așteptare' };
+              return { statusType: 'PENDING' as const, tooltip: 'Pending Request' };
             }
             if (req.status === 'APPROVED' || req.status === 'ACCEPTED') {
               const reqType = req.leaveRequestType || '';
               return reqType.toLowerCase().includes('medical')
-                ? { statusType: 'APPROVED_MEDICAL' as const, tooltip: 'Concediu Medical' }
-                : { statusType: 'APPROVED_VACATION' as const, tooltip: 'Concediu de Odihnă' };
+                ? { statusType: 'APPROVED_MEDICAL' as const, tooltip: 'Medical Request' }
+                : { statusType: 'APPROVED_VACATION' as const, tooltip: 'Vacation Request' };
             }
           }
         }

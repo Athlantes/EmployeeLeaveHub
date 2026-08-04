@@ -7,11 +7,11 @@
       </div>
       
       <div class="field mt-3">
-        <label for="password" class="font-semibold">Parola</label>
+        <label for="password" class="font-semibold">Password</label>
         <p-password id="password" [(ngModel)]="password" name="password" [feedback]="false" [toggleMask]="true" styleClass="w-full" inputStyleClass="w-full" required></p-password>
       </div>
       
-      <p-button label="Intra in cont" type="submit" styleClass="w-full mt-4"></p-button>
+      <p-button label="Login" type="submit" styleClass="w-full mt-4"></p-button>
     </form>
     
     <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>

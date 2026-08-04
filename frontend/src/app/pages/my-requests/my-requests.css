@@ -1,0 +1,97 @@
+.my-requests-container {
+  padding: 20px;
+  background-color: transparent;
+}
+
+.filters-container {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+.filter-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 8px;
+  min-width: 220px;
+}
+
+.filter-item label {
+  font-size: 14px;
+  color: #4b5563;
+  font-weight: 500;
+}
+
+.filter-item.btn-clear {
+  min-width: auto;
+  margin-top: auto;
+}
+
+::ng-deep .btn-clear .p-button {
+  height: 40px; 
+}
+
+::ng-deep .w-full {
+  width: 100%;
+}
+
+::ng-deep .requests-list-card {
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+  border-radius: 8px;
+}
+
+::ng-deep .requests-list-card .p-card-body {
+  padding: 8px 16px;
+}
+
+.request-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 4px;
+  font-size: 14px;
+  color: #374151;
+  transition: background-color 0.2s ease;
+}
+
+.request-row:hover {
+  background-color: #f9fafb;
+  border-radius: 6px;
+}
+
+.req-type { flex: 2; font-weight: 500; }
+.req-dates { flex: 2; text-align: center; }
+.req-days { flex: 1; text-align: center; }
+.req-badge { flex: 1; display: flex; justify-content: center; }
+
+::ng-deep .requests-list-card p-divider {
+  margin: 4px 0;
+}
+
+.no-requests {
+  padding: 2rem;
+  text-align: center;
+  color: #6c757d;
+}
+
+.dialog-body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 10px;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.detail-row:last-child {
+  border-bottom: none;
+}
