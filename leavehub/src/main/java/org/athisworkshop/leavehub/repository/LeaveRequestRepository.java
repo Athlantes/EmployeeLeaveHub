@@ -5,6 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,5 +23,26 @@ public interface LeaveRequestRepository extends JpaRepository<LeaveRequest, Long
     Long calculateUsedDaysByTypeAndYear(@Param("employeeId") Long employeeId,
                                         @Param("type") String type,
                                         @Param("year") int year,
-                                        @Param("status") String status);
+                                        @Param("status") String status
+    );
+
+    @Query("SELECT r FROM LeaveRequest r WHERE r.employee.id = :employeeId " +
+            "AND (:status IS NULL OR r.status = :status) " +
+            "AND (:leaveType IS NULL OR r.leaveType.name = :leaveType) " +
+            "AND (CAST(:targetDate AS date) IS NULL OR (:targetDate BETWEEN r.startDate AND r.endDate))")
+    List<LeaveRequest> findFilteredRequests(
+            @Param("employeeId") Long employeeId,
+            @Param("status") String status,
+            @Param("leaveType") String leaveType,
+            @Param("targetDate") LocalDate targetDate
+    );
+
+    @Query("SELECT r FROM LeaveRequest r WHERE r.employee.id = :employeeId " +
+            "AND r.startDate <= :endOfMonth AND r.endDate >= :startOfMonth " +
+            "AND r.status IN ('PENDING', 'ACCEPTED')")
+    List<LeaveRequest> findRequestsForCalendar(
+            @Param("employeeId") Long employeeId,
+            @Param("startOfMonth") LocalDate startOfMonth,
+            @Param("endOfMonth") LocalDate endOfMonth
+    );
 }

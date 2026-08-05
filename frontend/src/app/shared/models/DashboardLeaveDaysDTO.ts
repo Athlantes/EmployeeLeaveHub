@@ -3,4 +3,8 @@ export interface DashboardLeaveDaysDTO {
   usedMedicalDays: number;
   usedPaidDays: number;
   usedUnpaidDays: number;
+  usedPaternityDays: number;
+  usedMaternityDays: number;
+  usedStudyDays: number;
+  usedSabbaticalDays: number;
 }

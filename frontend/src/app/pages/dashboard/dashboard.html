@@ -3,19 +3,19 @@
   <div class="dashboard-main-content">
     @if (leaveStats) {
       <div class="stats-container">
-        <p-card header="Vacation Days" styleClass="mini-stat-card">
+        <p-card header="Vacation Days" class="mini-stat-card">
           <span class="stat-value">{{ leaveStats.usedVacationDays }}</span>
         </p-card>
 
-        <p-card header="Medical Days" styleClass="mini-stat-card">
+        <p-card header="Medical Days" class="mini-stat-card">
           <span class="stat-value">{{ leaveStats.usedMedicalDays }}</span>
         </p-card>
 
-        <p-card header="Paid Days" styleClass="mini-stat-card">
+        <p-card header="Paid Days" class="mini-stat-card">
           <span class="stat-value">{{ leaveStats.usedPaidDays }}</span>
         </p-card>
 
-        <p-card header="Unpaid Days" styleClass="mini-stat-card">
+        <p-card header="Unpaid Days" class="mini-stat-card">
           <span class="stat-value">{{ leaveStats.usedUnpaidDays }}</span>
         </p-card>
       </div>
@@ -107,7 +107,7 @@
   </div>
 
   <div class="dashboard-sidebar-right">
-    <app-dashboard-calendar [leaveRequests]="allLeaveRequestsList"></app-dashboard-calendar>
+    <app-dashboard-calendar [employeeId]="employeeId"></app-dashboard-calendar>
   </div>
 
 </div>

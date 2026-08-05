@@ -25,6 +25,7 @@ export class Dashboard implements OnInit {
   recentRequests: DashboardLeaveRequestDTO | null = null;
   userRole: string = '';
   userInitials: string = '';
+  employeeId: number = 0;
 
   constructor(
     private leaveRequestService: LeaveRequestService, 
@@ -39,10 +40,10 @@ export class Dashboard implements OnInit {
 
       this.userInitials = this.getInitials(fullName);
       const storedId = localStorage.getItem('empl_id');
-      const employeeId = storedId ? parseInt(storedId, 10) : 0;
+      this.employeeId = storedId ? parseInt(storedId, 10) : 0;
       
-      if (employeeId > 0) {
-        this.leaveRequestService.getDashboardStats(employeeId).subscribe({
+      if (this.employeeId > 0) {
+        this.leaveRequestService.getDashboardStats(this.employeeId).subscribe({
           next: (stats: DashboardLeaveDaysDTO) => {
             setTimeout(() => {
               this.leaveStats = stats;
@@ -52,7 +53,7 @@ export class Dashboard implements OnInit {
           error: (error) => console.error('Error fetching leave stats:', error)
         });
 
-        this.leaveRequestService.getDashboardRequests(employeeId).subscribe({
+        this.leaveRequestService.getDashboardRequests(this.employeeId).subscribe({
           next: (requests: DashboardLeaveRequestDTO) => {
             setTimeout(() => {
               this.recentRequests = requests;
@@ -75,15 +76,5 @@ export class Dashboard implements OnInit {
       return (nameParts[0][0] + nameParts[1][0]).toUpperCase();
     }
     return name.substring(0, 2).toUpperCase();
-  }
-
-  get allLeaveRequestsList(): any[] {
-    if (!this.recentRequests) return [];
-    const list: any[] = [];
-    if (this.recentRequests.latestDraft) list.push(this.recentRequests.latestDraft);
-    if (this.recentRequests.latestPending) list.push(this.recentRequests.latestPending);
-    if (this.recentRequests.latestAccepted) list.push(this.recentRequests.latestAccepted);
-    if (this.recentRequests.latestRejected) list.push(this.recentRequests.latestRejected);
-    return list;
   }
 }

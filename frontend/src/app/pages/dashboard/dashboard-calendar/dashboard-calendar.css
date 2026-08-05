@@ -40,6 +40,8 @@
   color: #334155;
   background-color: #f8fafc;
   transition: all 0.2s;
+  box-sizing: border-box;
+  border: 2px solid transparent; 
 }
 
 .day-cell.other-month {

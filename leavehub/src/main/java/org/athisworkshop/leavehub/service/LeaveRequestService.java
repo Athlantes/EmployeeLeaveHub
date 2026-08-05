@@ -9,9 +9,11 @@ import org.athisworkshop.leavehub.repository.LeaveRequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.Year;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class LeaveRequestService {
@@ -67,9 +69,52 @@ public class LeaveRequestService {
         Long unpaidDays = leaveRequestRepository.calculateUsedDaysByTypeAndYear(employeeId, "Concediu Fara Plata", currentYear, acceptedStatus);
         stats.setUsedUnpaidDays(unpaidDays.intValue());
 
-        Long paidDays = leaveRequestRepository.calculateUsedDaysByTypeAndYear(employeeId, "Zile Libere Platite", currentYear, acceptedStatus);
+        Long paidDays = leaveRequestRepository.calculateUsedDaysByTypeAndYear(employeeId, "Evenimente Deosebite", currentYear, acceptedStatus);
         stats.setUsedPaidDays(paidDays.intValue());
 
+        Long paternityDays = leaveRequestRepository.calculateUsedDaysByTypeAndYear(employeeId, "Concediu de Paternitate", currentYear, acceptedStatus);
+        stats.setUsedPaternityDays(paternityDays.intValue());
+
+        Long maternityDays = leaveRequestRepository.calculateUsedDaysByTypeAndYear(employeeId, "Concediu de Maternitate", currentYear, acceptedStatus);
+        stats.setUsedMaternityDays(maternityDays.intValue());
+
+        Long studyDays = leaveRequestRepository.calculateUsedDaysByTypeAndYear(employeeId, "Concediu de Studii", currentYear, acceptedStatus);
+        stats.setUsedStudyDays(studyDays.intValue());
+
+        Long sabbaticalDays = leaveRequestRepository.calculateUsedDaysByTypeAndYear(employeeId, "Concediu Sabatic", currentYear, acceptedStatus);
+        stats.setUsedSabbaticalDays(sabbaticalDays.intValue());
+
         return stats;
+    }
+
+    public List<LeaveRequestDTO> getFilteredMyRequests(Long employeeId, String status, String type, LocalDate date) {
+        List<LeaveRequest> requests = leaveRequestRepository.findFilteredRequests(employeeId, status, type, date);
+        return requests.stream()
+                .map(leaveRequestMapper::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    public List<LeaveRequestDTO> getCalendarRequests(Long employeeId, int year, int month) {
+        LocalDate startOfMonth = LocalDate.of(year, month, 1);
+        LocalDate endOfMonth = startOfMonth.withDayOfMonth(startOfMonth.lengthOfMonth());
+
+        List<LeaveRequest> requests = leaveRequestRepository.findRequestsForCalendar(employeeId, startOfMonth, endOfMonth);
+
+        return requests.stream()
+                .map(leaveRequestMapper::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    public List<LocalDate> getHolidaysForYear(int year) {
+        return List.of(
+                LocalDate.of(year, 1, 1), LocalDate.of(year, 1, 2), // Anul Nou
+                LocalDate.of(year, 1, 24), // Unirea Principatelor
+                LocalDate.of(year, 5, 1), // Ziua Muncii
+                LocalDate.of(year, 6, 1), // Ziua Copilului
+                LocalDate.of(year, 8, 15), // Adormirea Maicii Domnului
+                LocalDate.of(year, 11, 30), // Sf Andrei
+                LocalDate.of(year, 12, 1), // Ziua Nationala
+                LocalDate.of(year, 12, 25), LocalDate.of(year, 12, 26) // Craciun
+        );
     }
 }

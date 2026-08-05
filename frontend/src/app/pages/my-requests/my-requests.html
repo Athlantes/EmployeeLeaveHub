@@ -9,7 +9,7 @@
         [(ngModel)]="selectedStatus" 
         (onChange)="onFilterChange()" 
         placeholder="Select Status" 
-        styleClass="w-full">
+        class="w-full">
       </p-select>
     </div>
 
@@ -20,7 +20,7 @@
         [(ngModel)]="selectedType" 
         (onChange)="onFilterChange()" 
         placeholder="Select Type" 
-        styleClass="w-full">
+        class="w-full">
       </p-select>
     </div>
 
@@ -33,7 +33,7 @@
         [showClear]="true" 
         placeholder="Choose a Date" 
         dateFormat="dd.mm.yy" 
-        styleClass="w-full">
+        class="w-full">
       </p-datepicker>
     </div>
 
@@ -49,7 +49,7 @@
 
   </div>
 
-  <p-card styleClass="requests-list-card">
+  <p-card class="requests-list-card">
     
     <div *ngIf="filteredRequests.length === 0" class="no-requests">
       No requests found matching the selected criteria.

@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 import { RouterOutlet, RouterLink, RouterLinkActive, Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { AuthService } from './core/services/auth.service';
+import { NewRequestForm } from './shared/components/new-request-form/new-request-form';
 import { AvatarModule } from 'primeng/avatar';
 import { TagModule } from 'primeng/tag';
 import { MenuModule } from 'primeng/menu';
 import { MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
+import { DialogModule } from 'primeng/dialog';
 
 @Component({
   selector: 'app-root',
@@ -20,7 +22,9 @@ import { ButtonModule } from 'primeng/button';
     AvatarModule,
     TagModule,
     MenuModule,
-    ButtonModule
+    ButtonModule,
+    DialogModule,
+    NewRequestForm
   ], 
   templateUrl: './app.html',
   styleUrls: ['./app.css']
@@ -30,6 +34,7 @@ export class App implements OnInit {
   pageTitle: string = 'Dashboard';
   isLoginPage: boolean = false;
   showNewRequestBtn: boolean = false;
+  displayNewRequestModal: boolean = false;
 
   constructor(
     public authService: AuthService, 
@@ -78,6 +83,15 @@ export class App implements OnInit {
   }
 
   initiateNewRequest(): void {
-    console.log('Initiating new request...');
+    this.displayNewRequestModal = true;
+  }
+
+  closeModal(): void {
+    this.displayNewRequestModal = false;
+  }
+
+  handleRequestSubmit(formData: any): void {
+    console.log('Selected data from form:', formData);
+    this.displayNewRequestModal = false;
   }
 }

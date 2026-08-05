@@ -60,6 +60,23 @@
     </main>
   </div>
 
+  <p-dialog 
+    header="Create New Leave Request" 
+    [(visible)]="displayNewRequestModal" 
+    [modal]="true" 
+    [style]="{ width: '450px' }" 
+    [draggable]="false" 
+    [resizable]="false"
+    class="new-request-dialog">
+      
+      <div class="pt-3">
+        <app-new-request-form 
+          (onSubmit)="handleRequestSubmit($event)" 
+          (onCancel)="closeModal()">
+        </app-new-request-form>
+      </div>
+  </p-dialog>
+
 } @else {
   <router-outlet></router-outlet>
 }

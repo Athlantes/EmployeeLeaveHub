@@ -24,6 +24,7 @@
   flex-wrap: wrap;
   margin-bottom: 24px; 
   width: 100%;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
 }
 
 ::ng-deep .mini-stat-card {

@@ -1,0 +1,40 @@
+<form [formGroup]="requestForm" (ngSubmit)="submitForm()" class="flex flex-col gap-4">
+  
+  <div class="field">
+    <label for="leaveType" class="block font-medium mb-2">Leave Type <span class="text-red-500">*</span></label>
+    <p-select 
+      id="leaveType" 
+      formControlName="leaveType" 
+      [options]="leaveTypes" 
+      optionLabel="label"
+      optionValue="value"
+      placeholder="Select leave type"
+      [style]="{'width':'100%'}"
+      appendTo="body">
+    </p-select>
+    <small class="text-red-500" *ngIf="requestForm.get('leaveType')?.invalid && requestForm.get('leaveType')?.touched">
+      Please select a leave type.
+    </small>
+  </div>
+
+  <div class="field">
+    <label for="dateRange" class="block font-medium mb-2">Period <span class="text-red-500">*</span></label>
+    <p-datepicker 
+      id="dateRange" 
+      formControlName="dateRange" 
+      selectionMode="range" 
+      [readonlyInput]="true" 
+      placeholder="Select start and end date"
+      [style]="{'width':'100%'}"
+      appendTo="body">
+    </p-datepicker>
+    <small class="text-red-500" *ngIf="requestForm.get('dateRange')?.invalid && requestForm.get('dateRange')?.touched">
+      Please select the period.
+    </small>
+  </div>
+
+  <div class="flex justify-end gap-3 mt-4 border-t pt-4">
+    <p-button label="Submit Request" icon="pi pi-check" type="submit" [disabled]="requestForm.invalid"></p-button>
+  </div>
+
+</form>

@@ -5,6 +5,10 @@ public class DashboardLeaveDaysDTO {
     private Integer usedMedicalDays;
     private Integer usedPaidDays;
     private Integer usedUnpaidDays;
+    private Integer usedPaternityDays;
+    private Integer usedMaternityDays;
+    private Integer usedStudyDays;
+    private Integer usedSabbaticalDays;
 
     public Integer getUsedVacationDays() {
         return usedVacationDays;
@@ -36,5 +40,37 @@ public class DashboardLeaveDaysDTO {
 
     public void setUsedUnpaidDays(Integer usedUnpaidDays) {
         this.usedUnpaidDays = usedUnpaidDays;
+    }
+
+    public Integer getUsedPaternityDays() {
+        return usedPaternityDays;
+    }
+
+    public void setUsedPaternityDays(Integer usedPaternityDays) {
+        this.usedPaternityDays = usedPaternityDays;
+    }
+
+    public Integer getUsedMaternityDays() {
+        return usedMaternityDays;
+    }
+
+    public void setUsedMaternityDays(Integer usedMaternityDays) {
+        this.usedMaternityDays = usedMaternityDays;
+    }
+
+    public Integer getUsedStudyDays() {
+        return usedStudyDays;
+    }
+
+    public void setUsedStudyDays(Integer usedStudyDays) {
+        this.usedStudyDays = usedStudyDays;
+    }
+
+    public Integer getUsedSabbaticalDays() {
+        return usedSabbaticalDays;
+    }
+
+    public void setUsedSabbaticalDays(Integer usedSabbaticalDays) {
+        this.usedSabbaticalDays = usedSabbaticalDays;
     }
 }
