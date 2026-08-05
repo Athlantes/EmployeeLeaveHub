@@ -23,16 +23,25 @@ public class Attachment {
     @Column(name = "file_path")
     private String filePath;
 
+    @Column(name = "file_type")
+    private String fileType;
+
+    @Lob
+    @Column(name = "data", columnDefinition = "LONGBLOB")
+    private byte[] data;
+
     @Column(name = "uploaded_at")
     private LocalDateTime uploadedAt;
 
     public Attachment() {}
 
-    public Attachment(LeaveRequest leaveRequest, String fileName, String filePath, LocalDateTime uploadedAt) {
+    public Attachment(LeaveRequest leaveRequest, String fileName, String filePath, LocalDateTime uploadedAt, String fileType, byte[] data) {
         this.leaveRequest = leaveRequest;
         this.fileName = fileName;
         this.filePath = filePath;
         this.uploadedAt = uploadedAt;
+        this.fileType = fileType;
+        this.data = data;
     }
 
     public Long getId() {
@@ -73,5 +82,21 @@ public class Attachment {
 
     public void setUploadedAt(LocalDateTime uploadedAt) {
         this.uploadedAt = uploadedAt;
+    }
+
+    public String getFileType() {
+        return fileType;
+    }
+
+    public void setFileType(String fileType) {
+        this.fileType = fileType;
+    }
+
+    public byte[] getData() {
+        return data;
+    }
+
+    public void setData(byte[] data) {
+        this.data = data;
     }
 }

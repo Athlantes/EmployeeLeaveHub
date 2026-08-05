@@ -9,8 +9,10 @@ import org.athisworkshop.leavehub.repository.LeaveTypeRepository;
 import org.athisworkshop.leavehub.service.LeaveRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -85,5 +87,14 @@ public class LeaveRequestController {
     @GetMapping("/holidays")
     public ResponseEntity<List<LocalDate>> getHolidays(@RequestParam int year) {
         return ResponseEntity.ok(leaveRequestService.getHolidaysForYear(year));
+    }
+
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<LeaveRequestDTO> createLeaveRequest(
+            @RequestPart("request") LeaveRequestDTO leaveRequestDTO,
+            @RequestPart(value = "file", required = false) MultipartFile file) {
+
+        LeaveRequestDTO createdRequest = leaveRequestService.createLeaveRequest(leaveRequestDTO, file);
+        return ResponseEntity.ok(createdRequest);
     }
 }

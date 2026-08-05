@@ -3,12 +3,16 @@ package org.athisworkshop.leavehub.service;
 import org.athisworkshop.leavehub.dto.DashboardLeaveDaysDTO;
 import org.athisworkshop.leavehub.dto.DashboardLeaveRequestDTO;
 import org.athisworkshop.leavehub.dto.LeaveRequestDTO;
+import org.athisworkshop.leavehub.entity.Attachment;
 import org.athisworkshop.leavehub.entity.LeaveRequest;
 import org.athisworkshop.leavehub.mapper.LeaveRequestMapper;
+import org.athisworkshop.leavehub.repository.EmployeeRepository;
 import org.athisworkshop.leavehub.repository.LeaveRequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.Year;
 import java.util.List;
@@ -22,6 +26,9 @@ public class LeaveRequestService {
 
     @Autowired
     private LeaveRequestMapper leaveRequestMapper;
+
+    @Autowired
+    private EmployeeRepository employeeRepository;
 
     public LeaveRequestDTO findLeaveRequestById(Long id) {
         LeaveRequest leaveRequest = leaveRequestRepository.getReferenceById(id);
@@ -116,5 +123,26 @@ public class LeaveRequestService {
                 LocalDate.of(year, 12, 1), // Ziua Nationala
                 LocalDate.of(year, 12, 25), LocalDate.of(year, 12, 26) // Craciun
         );
+    }
+
+    public LeaveRequestDTO createLeaveRequest(LeaveRequestDTO dto, MultipartFile file) {
+        LeaveRequest leaveRequest = leaveRequestMapper.toEntity(dto);
+
+        leaveRequest.setEmployee(employeeRepository.findById(dto.getId()).orElseThrow());
+
+        if (file != null && !file.isEmpty()) {
+            Attachment attachment = new Attachment();
+            attachment.setFileName(file.getOriginalFilename());
+            attachment.setFileType(file.getContentType());
+            try {
+                attachment.setData(file.getBytes());
+            } catch (IOException e) {
+                throw new RuntimeException("Error processing the file", e);
+            }
+            leaveRequest.setAttachment(attachment);
+        }
+
+        LeaveRequest savedRequest = leaveRequestRepository.save(leaveRequest);
+        return leaveRequestMapper.toDTO(savedRequest);
     }
 }

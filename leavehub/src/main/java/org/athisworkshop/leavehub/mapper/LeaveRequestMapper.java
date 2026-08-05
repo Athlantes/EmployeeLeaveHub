@@ -21,6 +21,12 @@ public class LeaveRequestMapper {
         dto.setEndDate(leaveRequest.getEndDate());
         dto.setWorkingDays(leaveRequest.getWorkingDays());
         dto.setStatus(LeaveRequestDTO.Status.valueOf(leaveRequest.getStatus()));
+
+        if (leaveRequest.getAttachment() != null) {
+            dto.setAttachmentId(leaveRequest.getAttachment().getId());
+            dto.setAttachmentFileName(leaveRequest.getAttachment().getFileName());
+        }
+
         return dto;
     }
 

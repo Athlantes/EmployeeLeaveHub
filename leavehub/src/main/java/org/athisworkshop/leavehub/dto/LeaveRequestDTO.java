@@ -1,5 +1,7 @@
 package org.athisworkshop.leavehub.dto;
 
+import org.athisworkshop.leavehub.entity.Attachment;
+
 import java.time.LocalDate;
 
 public class LeaveRequestDTO {
@@ -9,6 +11,8 @@ public class LeaveRequestDTO {
     private LocalDate endDate;
     private Long workingDays;
     private Status status;
+    private Long attachmentId;
+    private String attachmentFileName;
 
     public enum Status{
         PENDING, ACCEPTED, REJECTED, DRAFT
@@ -58,7 +62,13 @@ public class LeaveRequestDTO {
         return status;
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
-    }
+    public void setStatus(Status status) {this.status = status; }
+
+    public Long getAttachmentId() { return attachmentId; }
+
+    public void setAttachmentId(Long attachmentId) { this.attachmentId = attachmentId; }
+
+    public String getAttachmentFileName() { return attachmentFileName; }
+
+    public void setAttachmentFileName(String attachmentFileName) { this.attachmentFileName = attachmentFileName; }
 }

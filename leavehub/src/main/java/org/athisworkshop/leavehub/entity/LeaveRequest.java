@@ -23,6 +23,10 @@ public class LeaveRequest {
     @JoinColumn(name = "leave_type_id", referencedColumnName = "leave_type_id")
     private LeaveType leaveType;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "attachment_id", referencedColumnName = "attachment_id")
+    private Attachment attachment;
+
     @Column(name = "start_date")
     private LocalDate startDate;
 
@@ -40,7 +44,7 @@ public class LeaveRequest {
 
     public LeaveRequest() {}
 
-    public LeaveRequest(Employee employee, LeaveType leaveType, LocalDate startDate, LocalDate endDate, Long workingDays, String status, LocalDateTime createdAt) {
+    public LeaveRequest(Employee employee, LeaveType leaveType, LocalDate startDate, LocalDate endDate, Long workingDays, String status, LocalDateTime createdAt, Attachment attachment) {
         this.employee = employee;
         this.leaveType = leaveType;
         this.startDate = startDate;
@@ -48,6 +52,7 @@ public class LeaveRequest {
         this.workingDays = workingDays;
         this.status = status;
         this.createdAt = createdAt;
+        this.attachment = attachment;
     }
 
     public Long getId() {
@@ -112,5 +117,13 @@ public class LeaveRequest {
 
     public void setEmployee(Employee employee) {
         this.employee = employee;
+    }
+
+    public Attachment getAttachment() {
+        return attachment;
+    }
+
+    public void setAttachment (Attachment attachment) {
+        this.attachment = attachment;
     }
 }
