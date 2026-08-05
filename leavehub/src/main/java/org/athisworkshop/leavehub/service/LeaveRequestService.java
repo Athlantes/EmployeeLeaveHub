@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Year;
 import java.util.List;
 import java.util.Optional;
@@ -126,9 +127,20 @@ public class LeaveRequestService {
     }
 
     public LeaveRequestDTO createLeaveRequest(LeaveRequestDTO dto, MultipartFile file) {
-        LeaveRequest leaveRequest = leaveRequestMapper.toEntity(dto);
 
-        leaveRequest.setEmployee(employeeRepository.findById(dto.getId()).orElseThrow());
+        long overlappingCount = leaveRequestRepository.countOverlappingRequests(
+            dto.getEmployeeId(),
+            dto.getStartDate(),
+            dto.getEndDate()
+        );
+
+        if (overlappingCount > 0) {
+            throw new IllegalArgumentException("You already have a request for those dates.");
+        }
+
+        LeaveRequest leaveRequest = leaveRequestMapper.toEntity(dto);
+        leaveRequest.setEmployee(employeeRepository.findById(dto.getEmployeeId()).orElseThrow());
+        leaveRequest.setCreatedAt(LocalDateTime.now());
 
         if (file != null && !file.isEmpty()) {
             Attachment attachment = new Attachment();

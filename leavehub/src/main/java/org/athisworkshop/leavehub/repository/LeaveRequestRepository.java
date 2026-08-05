@@ -45,4 +45,13 @@ public interface LeaveRequestRepository extends JpaRepository<LeaveRequest, Long
             @Param("startOfMonth") LocalDate startOfMonth,
             @Param("endOfMonth") LocalDate endOfMonth
     );
+
+    @Query("SELECT COUNT(lr) FROM LeaveRequest lr WHERE lr.employee.id = :employeeId " +
+            "AND lr.status != 'REJECTED' " +
+            "AND lr.startDate <= :endDate AND lr.endDate >= :startDate")
+    long countOverlappingRequests(
+            @Param("employeeId") Long employeeId,
+            @Param("startDate") LocalDate startDate,
+            @Param("endDate") LocalDate endDate
+    );
 }

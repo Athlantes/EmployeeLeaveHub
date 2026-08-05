@@ -126,4 +126,7 @@ public class LeaveRequest {
     public void setAttachment (Attachment attachment) {
         this.attachment = attachment;
     }
+
+    @PrePersist
+    protected void onCreate() { this.createdAt = LocalDateTime.now(); }
 }

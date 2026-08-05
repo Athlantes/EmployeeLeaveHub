@@ -6,6 +6,7 @@ import java.time.LocalDate;
 
 public class LeaveRequestDTO {
     private Long id;
+    private Long employeeId;
     private String leaveRequestType;
     private LocalDate startDate;
     private LocalDate endDate;
@@ -25,6 +26,10 @@ public class LeaveRequestDTO {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public Long getEmployeeId() { return employeeId; }
+
+    public void setEmployeeId(Long employeeId) { this.employeeId = employeeId; }
 
     public String getLeaveRequestType() {
         return leaveRequestType;

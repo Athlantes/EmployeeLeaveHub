@@ -51,4 +51,17 @@ export class LeaveRequestService {
     let params = new HttpParams().set('year', year.toString());
     return this.http.get<string[]>(`${this.apiUrl}/holidays`, { params });
   }
+
+  createLeaveRequest(requestData: LeaveRequestDTO, file?: File): Observable<LeaveRequestDTO> {
+    const formData: FormData = new FormData();
+    
+    const jsonBlob = new Blob([JSON.stringify(requestData)], { type: 'application/json' });
+    formData.append('request', jsonBlob);
+
+    if (file) {
+      formData.append('file', file, file.name);
+    }
+
+    return this.http.post<LeaveRequestDTO>(this.apiUrl, formData);
+  }
 }
