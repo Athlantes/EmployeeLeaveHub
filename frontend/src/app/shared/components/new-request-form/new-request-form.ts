@@ -7,6 +7,7 @@ import { DatePickerModule } from 'primeng/datepicker';
 import { TextareaModule } from 'primeng/textarea';
 import { ButtonModule } from 'primeng/button';
 import { LeaveRequestDTO } from '../../models/LeaveRequestDTO';
+import { LeaveStatus } from '../../models/leave-status.enum';
 
 @Component({
   selector: 'app-new-request-form',
@@ -77,7 +78,7 @@ export class NewRequestForm implements OnInit {
         startDate: this.formatDate(startDate),
         endDate: this.formatDate(endDate),
         workingDays: this.calculateWorkingDays(startDate, endDate),
-        status: 'PENDING'
+        status: LeaveStatus.PENDING
       };
 
       this.leaveRequestService.createLeaveRequest(dto, this.selectedFile || undefined)

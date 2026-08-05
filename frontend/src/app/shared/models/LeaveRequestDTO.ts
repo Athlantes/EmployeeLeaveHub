@@ -7,7 +7,7 @@ export interface LeaveRequestDTO {
     startDate: string;
     endDate: string;
     workingDays: number;
-    status: 'PENDING' | 'ACCEPTED' | 'REJECTED' | 'DRAFT';
+    status: LeaveStatus;
     attachmentId?: number;
     attachmentFileName?: string;
 }
