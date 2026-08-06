@@ -1,7 +1,7 @@
-<form [formGroup]="requestForm" (ngSubmit)="submitForm()" class="flex flex-col gap-4">
+<form [formGroup]="requestForm" (ngSubmit)="submitForm()" class="request-form-container">
   
-  <div class="field">
-    <label for="leaveType" class="block font-medium mb-2">Leave Type <span class="text-red-500">*</span></label>
+  <div class="form-field">
+    <label for="leaveType" class="field-label">Leave Type <span class="required-mark">*</span></label>
     <p-select 
       id="leaveType" 
       formControlName="leaveType" 
@@ -9,43 +9,74 @@
       optionLabel="label"
       optionValue="value"
       placeholder="Select leave type"
-      [style]="{'width':'100%'}"
+      class="full-width-control"
+      [ngClass]="{'ng-invalid ng-dirty': requestForm.get('leaveType')?.invalid && requestForm.get('leaveType')?.touched}"
       appendTo="body">
     </p-select>
-    <small class="text-red-500" *ngIf="requestForm.get('leaveType')?.invalid && requestForm.get('leaveType')?.touched">
+    <small class="error-text" *ngIf="requestForm.get('leaveType')?.invalid && requestForm.get('leaveType')?.touched">
       Please select a leave type.
     </small>
   </div>
 
-  <div class="field">
-    <label for="dateRange" class="block font-medium mb-2">Period <span class="text-red-500">*</span></label>
+  <div class="form-field">
+    <label for="dateRange" class="field-label">Period <span class="required-mark">*</span></label>
     <p-datepicker 
       id="dateRange" 
       formControlName="dateRange" 
       selectionMode="range" 
       [readonlyInput]="true" 
       placeholder="Select start and end date"
-      [style]="{'width':'100%'}"
+      class="full-width-control"
+      [ngClass]="{'ng-invalid ng-dirty': requestForm.get('dateRange')?.invalid && requestForm.get('dateRange')?.touched}"
       appendTo="body">
     </p-datepicker>
-    <small class="text-red-500" *ngIf="requestForm.get('dateRange')?.invalid && requestForm.get('dateRange')?.touched">
+    <small class="error-text" *ngIf="requestForm.get('dateRange')?.invalid && requestForm.get('dateRange')?.touched">
       Please select the period.
     </small>
   </div>
 
-  <div class="field">
-    <label for="attachment" class="block font-medium mb-2">Document Justificativ (Medical/Evenimente)</label>
+  <div class="form-field">
+    <label for="reason" class="field-label">Reason / Notes</label>
+    <textarea 
+      pTextarea 
+      id="reason" 
+      formControlName="reason" 
+      rows="3" 
+      class="form-textarea" 
+      placeholder="Add any additional details...">
+    </textarea>
+  </div>
+
+  <div class="form-field">
+    <label class="field-label">Justifiable Documents</label>
+    
     <input 
       type="file" 
       id="attachment" 
       (change)="onFileSelected($event)" 
-      class="w-full p-2 border border-gray-300 rounded-md">
-    <small class="text-gray-500 block mt-1" *ngIf="selectedFile">
-      Fișier selectat: {{ selectedFile.name }}
-    </small>
+      multiple
+      class="hidden-input"
+      #fileInput>
+      
+    <button 
+      type="button" 
+      (click)="fileInput.click()" 
+      class="upload-btn">
+      <i class="pi pi-upload"></i>
+      <span>Click to browse files</span>
+    </button>
+
+    <div *ngIf="selectedFiles.length > 0" class="file-list-container">
+      <div *ngFor="let file of selectedFiles; let i = index" class="file-list-item">
+        <span class="file-name-text"><i class="pi pi-file file-icon"></i>{{ file.name }}</span>
+        <button type="button" (click)="removeFile(i)" class="remove-file-btn">
+          <i class="pi pi-times-circle"></i>
+        </button>
+      </div>
+    </div>
   </div>
 
-  <div class="flex justify-end gap-3 mt-4 border-t pt-4">
+  <div class="form-actions-footer">
     <p-button label="Cancel" icon="pi pi-times" severity="secondary" (onClick)="cancel()"></p-button>
     <p-button label="Submit Request" icon="pi pi-check" type="submit" [disabled]="requestForm.invalid"></p-button>
   </div>

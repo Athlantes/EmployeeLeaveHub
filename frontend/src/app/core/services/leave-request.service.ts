@@ -52,14 +52,16 @@ export class LeaveRequestService {
     return this.http.get<string[]>(`${this.apiUrl}/holidays`, { params });
   }
 
-  createLeaveRequest(requestData: LeaveRequestDTO, file?: File): Observable<LeaveRequestDTO> {
+  createLeaveRequest(requestData: LeaveRequestDTO, files?: File[]): Observable<LeaveRequestDTO> {
     const formData: FormData = new FormData();
     
     const jsonBlob = new Blob([JSON.stringify(requestData)], { type: 'application/json' });
     formData.append('request', jsonBlob);
 
-    if (file) {
-      formData.append('file', file, file.name);
+    if (files && files.length > 0) {
+      files.forEach(file => {
+        formData.append('files', file, file.name);
+      });
     }
 
     return this.http.post<LeaveRequestDTO>(this.apiUrl, formData);

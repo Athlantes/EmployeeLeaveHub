@@ -92,9 +92,9 @@ public class LeaveRequestController {
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<LeaveRequestDTO> createLeaveRequest(
             @RequestPart("request") LeaveRequestDTO leaveRequestDTO,
-            @RequestPart(value = "file", required = false) MultipartFile file) {
+            @RequestPart(value = "files", required = false) List<MultipartFile> files) {
 
-        LeaveRequestDTO createdRequest = leaveRequestService.createLeaveRequest(leaveRequestDTO, file);
+        LeaveRequestDTO createdRequest = leaveRequestService.createLeaveRequest(leaveRequestDTO, files);
         return ResponseEntity.ok(createdRequest);
     }
 }

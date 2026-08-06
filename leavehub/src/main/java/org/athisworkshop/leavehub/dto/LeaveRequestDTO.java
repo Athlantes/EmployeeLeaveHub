@@ -3,6 +3,7 @@ package org.athisworkshop.leavehub.dto;
 import org.athisworkshop.leavehub.entity.Attachment;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class LeaveRequestDTO {
     private Long id;
@@ -12,8 +13,9 @@ public class LeaveRequestDTO {
     private LocalDate endDate;
     private Long workingDays;
     private Status status;
-    private Long attachmentId;
-    private String attachmentFileName;
+    private List<Long> attachmentIds;
+    private List<String> attachmentFileNames;
+    private String reason;
 
     public enum Status{
         PENDING, ACCEPTED, REJECTED, DRAFT
@@ -69,11 +71,27 @@ public class LeaveRequestDTO {
 
     public void setStatus(Status status) {this.status = status; }
 
-    public Long getAttachmentId() { return attachmentId; }
+    public List<Long> getAttachmentIds() {
+        return attachmentIds;
+    }
 
-    public void setAttachmentId(Long attachmentId) { this.attachmentId = attachmentId; }
+    public void setAttachmentIds(List<Long> attachmentIds) {
+        this.attachmentIds = attachmentIds;
+    }
 
-    public String getAttachmentFileName() { return attachmentFileName; }
+    public List<String> getAttachmentFileNames() {
+        return attachmentFileNames;
+    }
 
-    public void setAttachmentFileName(String attachmentFileName) { this.attachmentFileName = attachmentFileName; }
+    public void setAttachmentFileNames(List<String> attachmentFileNames) {
+        this.attachmentFileNames = attachmentFileNames;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
 }

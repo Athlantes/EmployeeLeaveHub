@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Year;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -126,12 +127,11 @@ public class LeaveRequestService {
         );
     }
 
-    public LeaveRequestDTO createLeaveRequest(LeaveRequestDTO dto, MultipartFile file) {
-
+    public LeaveRequestDTO createLeaveRequest(LeaveRequestDTO dto, List<MultipartFile> files) {
         long overlappingCount = leaveRequestRepository.countOverlappingRequests(
-            dto.getEmployeeId(),
-            dto.getStartDate(),
-            dto.getEndDate()
+                dto.getEmployeeId(),
+                dto.getStartDate(),
+                dto.getEndDate()
         );
 
         if (overlappingCount > 0) {
@@ -140,21 +140,29 @@ public class LeaveRequestService {
 
         LeaveRequest leaveRequest = leaveRequestMapper.toEntity(dto);
         leaveRequest.setEmployee(employeeRepository.findById(dto.getEmployeeId()).orElseThrow());
-        leaveRequest.setCreatedAt(LocalDateTime.now());
 
-        if (file != null && !file.isEmpty()) {
-            Attachment attachment = new Attachment();
-            attachment.setFileName(file.getOriginalFilename());
-            attachment.setFileType(file.getContentType());
-            try {
-                attachment.setData(file.getBytes());
-            } catch (IOException e) {
-                throw new RuntimeException("Error processing the file", e);
+        if (files != null && !files.isEmpty()) {
+            List<Attachment> attachmentList = new ArrayList<>();
+            for (MultipartFile file : files) {
+                if (!file.isEmpty()) {
+                    Attachment attachment = new Attachment();
+                    attachment.setFileName(file.getOriginalFilename());
+                    attachment.setFileType(file.getContentType());
+                    try {
+                        attachment.setData(file.getBytes());
+                    } catch (IOException e) {
+                        throw new RuntimeException("Error processing the file: " + file.getOriginalFilename(), e);
+                    }
+
+                    attachment.setLeaveRequest(leaveRequest);
+                    attachmentList.add(attachment);
+                }
             }
-            leaveRequest.setAttachment(attachment);
+            leaveRequest.setAttachments(attachmentList);
         }
 
         LeaveRequest savedRequest = leaveRequestRepository.save(leaveRequest);
+
         return leaveRequestMapper.toDTO(savedRequest);
     }
 }

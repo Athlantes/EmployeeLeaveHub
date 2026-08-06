@@ -29,7 +29,7 @@ export class NewRequestForm implements OnInit {
 
   requestForm!: FormGroup;
   leaveTypes: any[] = [];
-  selectedFile: File | null = null;
+  selectedFiles: File[] = [];
 
   constructor(private fb: FormBuilder, private leaveRequestService: LeaveRequestService, private cdr: ChangeDetectorRef) {}
 
@@ -45,17 +45,20 @@ export class NewRequestForm implements OnInit {
         this.leaveTypes = types.map(type => ({ label: type, value: type }));
         this.cdr.detectChanges();
       },
-      error: (err) => console.error('Eroare la încărcarea tipurilor de concediu:', err)
+      error: (err) => console.error('Error loading leave types:', err)
     });
   }
 
   onFileSelected(event: any): void {
-    const file: File = event.target.files[0];
-    if (file) {
-      this.selectedFile = file;
+    if (event.target.files) {
+      this.selectedFiles = Array.from(event.target.files);
     } else {
-      this.selectedFile = null;
+      this.selectedFiles = [];
     }
+  }
+
+  removeFile(index: number): void {
+    this.selectedFiles.splice(index, 1);
   }
 
   submitForm() {
@@ -68,7 +71,7 @@ export class NewRequestForm implements OnInit {
       const employeeId = storedId ? parseInt(storedId, 10) : null;
 
       if (!employeeId) {
-        console.error("Nu s-a găsit ID-ul angajatului. Te rog reloghează-te.");
+        console.error("User ID Not Found. Please ensure the user is logged in and the ID is stored in localStorage.");
         return;
       }
 
@@ -78,19 +81,20 @@ export class NewRequestForm implements OnInit {
         startDate: this.formatDate(startDate),
         endDate: this.formatDate(endDate),
         workingDays: this.calculateWorkingDays(startDate, endDate),
-        status: LeaveStatus.PENDING
+        status: LeaveStatus.PENDING,
+        reason: formValues.reason,
       };
 
-      this.leaveRequestService.createLeaveRequest(dto, this.selectedFile || undefined)
+      this.leaveRequestService.createLeaveRequest(dto, this.selectedFiles.length ? this.selectedFiles : undefined)
         .subscribe({
           next: (res) => {
-            console.log('Request trimis cu succes:', res);
+            console.log('Request submitted successfully:', res);
             this.onSubmit.emit(res);
             this.requestForm.reset();
-            this.selectedFile = null;
+            this.selectedFiles = [];
           },
           error: (err) => {
-            console.error('Eroare la crearea cererii:', err);
+            console.error('Error creating leave request:', err);
           }
         });
     } else {
@@ -100,7 +104,7 @@ export class NewRequestForm implements OnInit {
 
   cancel() {
     this.requestForm.reset();
-    this.selectedFile = null;
+    this.selectedFiles = [];
     this.onCancel.emit();
   }
 

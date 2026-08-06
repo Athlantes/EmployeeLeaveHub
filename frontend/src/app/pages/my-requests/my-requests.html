@@ -104,5 +104,20 @@
       <strong>Working Days:</strong> 
       <span>{{ selectedRequest.workingDays }}</span>
     </div>
+    
+    <div class="detail-row" *ngIf="selectedRequest.reason">
+      <strong>Reason:</strong> 
+      <span class="reason-text">{{ selectedRequest.reason }}</span>
+    </div>
+
+    <div class="detail-row" *ngIf="selectedRequest.attachmentFileNames && selectedRequest.attachmentFileNames.length > 0">
+      <strong>Documents:</strong> 
+      <div class="attachments-list">
+        <div *ngFor="let fileName of selectedRequest.attachmentFileNames" class="attachment-item">
+          <i class="pi pi-file"></i>
+          <span>{{ fileName }}</span>
+        </div>
+      </div>
+    </div>
   </div>
 </p-dialog>

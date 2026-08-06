@@ -8,6 +8,7 @@ export interface LeaveRequestDTO {
     endDate: string;
     workingDays: number;
     status: LeaveStatus;
-    attachmentId?: number;
-    attachmentFileName?: string;
+    attachmentIds?: number[];
+    attachmentFileNames?: string[];
+    reason?: string;
 }
